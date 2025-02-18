@@ -1,0 +1,57 @@
+[
+    {
+        "ID": 65,
+        "key": "group_67b44b997b97b",
+        "title": "Настройка темы",
+        "fields": [
+            {
+                "ID": 66,
+                "key": "field_67b44b9983827",
+                "label": "test",
+                "name": "test",
+                "aria-label": "",
+                "prefix": "acf",
+                "type": "text",
+                "value": null,
+                "menu_order": 0,
+                "instructions": "",
+                "required": 0,
+                "id": "",
+                "class": "",
+                "conditional_logic": 0,
+                "parent": 65,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "_name": "test",
+                "_valid": 1
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "options_page",
+                    "operator": "==",
+                    "value": "simbiotica-settings"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": true,
+        "description": "",
+        "show_in_rest": 0,
+        "_valid": true
+    }
+]
