@@ -42,7 +42,7 @@ function footer_nav()
             'container' => '',
             'container_class' => 'menu-{menu slug}-container',
             'container_id' => '',
-            'menu_class' => 'menu-footer',
+            'menu_class' => 'menu-footer lg:flex lg:flex-row',
             'menu_id' => '',
             'echo' => true,
             'fallback_cb' => 'wp_page_menu',

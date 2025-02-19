@@ -11,7 +11,7 @@
 
 ?>
 
-<footer class="py-5 xl:py-10 text-center font-base text-light-100 font-semibold">
+<footer style="display: none" class="py-5 xl:py-10 text-center font-base text-light-100 font-semibold">
     <div class="container">
         <div class="flex justify-between">
             <div class="pb-3.5 xl:pb-7">

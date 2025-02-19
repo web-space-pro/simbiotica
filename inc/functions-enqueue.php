@@ -14,7 +14,7 @@ function simbiotica_theme_scripts()
    // wp_enqueue_script( 'map-yandex', get_template_directory_uri() . '/map/yos.js', array(), $ver, true);
    // wp_enqueue_script( 'input-mask', get_template_directory_uri() . '/assets/dist/scripts/plugins/jquery.maskedinput.min.js', array(), $ver, true);
 
-	wp_enqueue_script( 'app', get_template_directory_uri() . '/assets/dist/scripts/app.js', array(), $ver, true);
+	//wp_enqueue_script( 'app', get_template_directory_uri() . '/assets/dist/scripts/app.js', array(), $ver, true);
 
 	wp_localize_script( 'app', 'app_vars', array(
 		'ajaxUrl' => admin_url("admin-ajax.php")
