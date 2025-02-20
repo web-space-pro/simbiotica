@@ -14,7 +14,7 @@
 
 get_header();
 ?>
-    <main class="flex flex-col h-[90svh] overflow-x-hidden px-[2.8vmax] pt-6 mb-20 sm:mb-24">
+    <main class="flex flex-col md:h-[75svh] overflow-x-hidden px-[2.8vmax] pt-6 mb-20 sm:mb-24">
 
 
         <?php
