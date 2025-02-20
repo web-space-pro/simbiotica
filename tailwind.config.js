@@ -11,7 +11,7 @@ module.exports = {
       'sidebar.php',
       'footer.php',
       'page.php',
-      'page.php',
+      'front-page.php',
       'single-services.php',
       'single.php',
       'template-parts/content.php',
@@ -54,6 +54,7 @@ module.exports = {
       colors: {
         white: {
           10: '#f2f2f0',
+          20: '#d9d9d9',
         },
         gray:{
           10: '#3f4042',

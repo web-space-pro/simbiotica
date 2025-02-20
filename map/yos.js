@@ -3,48 +3,54 @@ function ready() {
     ymaps.ready(init);
 
     function init() {
-
-
-        const myMap = new ymaps.Map("map", {
-                center: [45.015378, 39.064426],
+        // Первая карта
+        const mapOffice = new ymaps.Map("map-office", {
+                center: [44.950457, 34.102069],
                 zoom: 16
             }, {
                 searchControlProvider: 'yandex#search'
             }),
-            myPlacemark = new ymaps.Placemark([45.015378, 39.064426], {
-                    // Чтобы балун и хинт открывались на метке, необходимо задать ей определенные свойства.
-                balloonContentHeader: "Наркологическая клиника в Краснодаре - Мед Плюс",
-                hintContent: "Наркологическая клиника в Краснодаре - Мед Плюс",
+            placemarkOffice = new ymaps.Placemark([44.950457, 34.102069], {
+                balloonContentHeader: "Симбиотика - Офис",
+                hintContent: "Симбиотика - Офис",
+                balloonContentBody: '<address>Адрес: Крым, г.Симферополь, ул.Одесская 2/21, 2 этаж</address>'
+            }, {
+                iconLayout: 'default#imageWithContent',
+                iconImageHref: '/wp-content/themes/simbiotica/map/marker.png',
+                iconImageSize: [72, 72],
+                iconImageOffset: [-30, -80]
+            });
 
-                balloonContentBody: [
-                    '<address>',
-                    'Адрес:  Краснодар, улица Трамвайная, 15/1',
-                    '</address>'
-                    ].join('')
-                }, {
-                    // Опции
-                    iconLayout: 'default#imageWithContent',
-                    // Своё изображение иконки метки.
-                    iconImageHref: '/wp-content/themes/med-plus/map/marker.png',
-                    // Размеры метки.
-                    iconImageSize: [72, 72],
-                    // Смещение левого верхнего угла иконки относительно
-                    // её "ножки" (точки привязки).
-                    iconImageOffset: [-30, -80],
-                    iconCaption: "Диаграмма"
-                }
-            );
+        mapOffice.geoObjects.add(placemarkOffice);
 
-        myMap.geoObjects.add(myPlacemark);
+        // Вторая карта
+        const mapProduction = new ymaps.Map("map-production", {
+                center: [44.898572, 34.141793],
+                zoom: 14
+            }, {
+                searchControlProvider: 'yandex#search'
+            }),
+            placemarkProduction = new ymaps.Placemark([44.898572, 34.141793], {
+                balloonContentHeader: "Карьер Петропавловский, Симбиотика",
+                hintContent: "Карьер Петропавловский, Симбиотика",
+                balloonContentBody: '<address>Адрес: Крым, Симферопольский район, Карьер Петропавловский, Симбиотика</address>'
+            }, {
+                iconLayout: 'default#imageWithContent',
+                iconImageHref: '/wp-content/themes/simbiotica/map/marker.png',
+                iconImageSize: [72, 72],
+                iconImageOffset: [-30, -80]
+            });
 
+        mapProduction.geoObjects.add(placemarkProduction);
+
+        // Отключение поведения для мобильных устройств
         if (jQuery(window).width() < 960) {
-            myMap.behaviors.disable('drag');
+            mapOffice.behaviors.disable('drag');
+            mapProduction.behaviors.disable('drag');
+        } else {
+            mapOffice.behaviors.disable('scrollZoom');
+            mapProduction.behaviors.disable('scrollZoom');
         }
-        else{
-            myMap.behaviors.disable('scrollZoom');
-        }
-
-
     }
 
 }

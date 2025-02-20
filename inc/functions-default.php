@@ -65,11 +65,12 @@ if ( function_exists('add_theme_support') ) {
     add_theme_support('menus');
 
     // Add Woocomerse Support
-    // add_theme_support( 'woocommerce' );
+     add_theme_support( 'woocommerce' );
+
     // add_theme_support( 'wc-product-gallery-slider' );
 
     //add_theme_support('automatic-feed-links');
-	//add_theme_support( 'html5', array( 'search-form' ) );
+	add_theme_support( 'html5', array( 'search-form' ) );
 
     // Add Thumbnail Theme Support
     add_theme_support('post-thumbnails');

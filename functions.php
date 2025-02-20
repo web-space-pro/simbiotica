@@ -17,3 +17,5 @@ require 'inc/functions-breadcrumbs.php';
 require 'inc/functions-ajax.php';
 require 'inc/functions-common.php';
 require 'inc/functions-acf.php';
+
+require 'inc/woocommerce/woocommerce-cart.php';

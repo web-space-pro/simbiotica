@@ -2,7 +2,7 @@
 add_action('after_setup_theme', 'simbiotica_theme_register_nav_menu');
 add_filter('walker_nav_menu_start_el', 'simbiotica_theme_add_caret_to_menu', 10, 4);
 add_filter('wp_nav_menu_args', 'my_wp_nav_menu_args');
-
+add_filter('show_admin_bar', '__return_false');
 function simbiotica_theme_register_nav_menu()
 {
     register_nav_menu('header-menu', 'Header Menu');
@@ -19,7 +19,7 @@ function header_nav()
             'container' => '',
             'container_class' => 'menu-{menu slug}-container',
             'container_id' => '',
-            'menu_class' => 'menu',
+            'menu_class' => 'menu flex flex-row',
             'menu_id' => '',
             'echo' => true,
             'fallback_cb' => 'wp_page_menu',
@@ -42,7 +42,7 @@ function footer_nav()
             'container' => '',
             'container_class' => 'menu-{menu slug}-container',
             'container_id' => '',
-            'menu_class' => 'menu-footer lg:flex lg:flex-row',
+            'menu_class' => 'menu-footer flex flex-col xs:flex-row',
             'menu_id' => '',
             'echo' => true,
             'fallback_cb' => 'wp_page_menu',

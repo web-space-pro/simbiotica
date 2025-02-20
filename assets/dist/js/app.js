@@ -11,11 +11,55 @@ try {
   window.jQuery = window.$ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
   // require("./vendors");
   // require("./modules/input_mask");
-  // require("./modules/menu");
+  __webpack_require__(/*! ./modules/menu */ "./assets/src/js/modules/menu.js");
   // require("./modules/generall");
+  __webpack_require__(/*! ./modules/woocommerce */ "./assets/src/js/modules/woocommerce.js");
 } catch (e) {
   console.log('JS ERROR!!!', e);
 }
+
+/***/ }),
+
+/***/ "./assets/src/js/modules/menu.js":
+/*!***************************************!*\
+  !*** ./assets/src/js/modules/menu.js ***!
+  \***************************************/
+/***/ (() => {
+
+(function ($, root, undefined) {
+  $(document).ready(function () {
+    $('#nav-icon').click(function () {
+      $(this).toggleClass('open');
+      $('.tcontainer').toggleClass('open');
+    });
+  });
+})(jQuery);
+
+/***/ }),
+
+/***/ "./assets/src/js/modules/woocommerce.js":
+/*!**********************************************!*\
+  !*** ./assets/src/js/modules/woocommerce.js ***!
+  \**********************************************/
+/***/ (() => {
+
+function updateCartCount() {
+  fetch('/wp-admin/admin-ajax.php?action=simbiotica_get_cart_count').then(function (response) {
+    return response.text();
+  }).then(function (count) {
+    document.getElementById('cart-count').textContent = count;
+  })["catch"](function (error) {
+    return console.error('Ошибка AJAX:', error);
+  });
+}
+
+// Обновляем количество при загрузке страницы
+updateCartCount();
+
+// Обновляем при добавлении товара в корзину
+jQuery(document).on('added_to_cart', function () {
+  updateCartCount();
+});
 
 /***/ }),
 
