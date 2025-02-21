@@ -10,44 +10,18 @@
 get_header();
 ?>
 
-    <section class="error-404 not-found">
-        <header class="page-header">
-            <h1 class="page-title"><?php esc_html_e( 'Oops! That page can&rsquo;t be found.', 'custom-theme' ); ?></h1>
-        </header>
-
-        <div class="page-content">
-            <p><?php esc_html_e( 'It looks like nothing was found at this location. Maybe try one of the links below or a search?', 'custom-theme' ); ?></p>
-
-            <?php
-            get_search_form();
-
-            the_widget( 'WP_Widget_Recent_Posts' );
-            ?>
-
-            <div class="widget widget_categories">
-                <h2 class="widget-title"><?php esc_html_e( 'Most Used Categories', 'custom-theme' ); ?></h2>
-                <ul>
-                    <?php
-                    wp_list_categories(
-                        array(
-                            'orderby'    => 'count',
-                            'order'      => 'DESC',
-                            'show_count' => 1,
-                            'title_li'   => '',
-                            'number'     => 10,
-                        )
-                    );
-                    ?>
-                </ul>
+    <section class="error-404 not-found min-h-[75svh] flex sm:items-center flex-col justify-center px-4 pt-6 sm:px-[2.8vmax]">
+        <div class="sm:w-[80%] xl:w-[45%] sm:m-auto mb-10">
+            <div class="text-[1.75rem] sm:text-4xl font-medium mb-8 sm:mb-4 leading-tight">
+                <h1 class="text-gray-20"><?php esc_html_e( 'Ошибка 404.', 'simbiotica' ); ?></h1>
+                <p class="w-80 sm:mt-4"><?php esc_html_e( 'такой страницы не существует', 'simbiotica' ); ?></p>
             </div>
-
-            <?php
-            $custom_theme_archive_content = '<p>' . sprintf( esc_html__( 'Try looking in the monthly archives. %1$s', 'custom-theme' ), convert_smilies( ':)' ) ) . '</p>';
-            the_widget( 'WP_Widget_Archives', 'dropdown=1', "after_title=</h2>$custom_theme_archive_content" );
-
-            the_widget( 'WP_Widget_Tag_Cloud' );
-            ?>
-
+            <div class="sm:w-[19rem] sm:ml-auto font-sans text-gray-10">
+                <p><?php esc_html_e( 'но есть много другой интересной и полезной информации, которую вы обязательно найдете в разделах сайта', 'simbiotica' ); ?></p>
+            </div>
+            <div class="mt-16 sm:mt-4">
+                <a href="<?=get_home_url()?>" target="_self" class="link sm:w-auto"> <?php esc_html_e( 'на главную', 'simbiotica' ); ?></a>
+            </div>
         </div>
     </section>
 
