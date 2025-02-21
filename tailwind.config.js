@@ -19,6 +19,7 @@ module.exports = {
       'block-parts/tpl-hero.php',
       'block-parts/tpl-find-us.php',
       'block-parts/tpl-read-us.php',
+      'block-parts/tpl-contact-us.php',
 
 
       'inc/functions-menus.php',
