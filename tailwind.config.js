@@ -20,6 +20,7 @@ module.exports = {
       'block-parts/tpl-find-us.php',
       'block-parts/tpl-read-us.php',
       'block-parts/tpl-contact-us.php',
+      'block-parts/tpl-offer.php',
 
 
       'inc/functions-menus.php',

@@ -127,3 +127,14 @@
     height: auto;
   }
 }
+
+@layer utilities {
+  b,strong{
+    @apply text-black;
+  }
+
+  a.link{
+    @apply cursor-pointer px-6 py-2 border border-black bg-black text-white-10  inline-block  text-base font-medium font-reg lowercase transition ease-in-out duration-500 hover:bg-transparent hover:text-black;
+  }
+}
+
