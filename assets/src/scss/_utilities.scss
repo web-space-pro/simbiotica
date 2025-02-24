@@ -127,7 +127,9 @@
     height: auto;
   }
 }
-
+button.active {
+  border-color: #000000;
+}
 @layer utilities {
   b,strong{
     @apply text-black;
@@ -136,5 +138,17 @@
   a.link{
     @apply cursor-pointer text-center px-6 py-2 border border-black bg-black text-white-10 block sm:inline-block  text-base font-medium font-reg lowercase transition ease-in-out duration-500 hover:bg-transparent hover:text-black;
   }
+  .scrollbar-none{
+    scrollbar-width: none;
+  }
+  .loadingspinner{
+    @apply m-auto col-span-2 lg:col-span-3 pointer-events-none w-8 h-8 border-transparent border-4 border-white-20 border-t-gray-10 rounded-full ;
+    animation: loadingspin 1s linear infinite;
+  }
 }
 
+@keyframes loadingspin {
+  100% {
+    transform: rotate(360deg)
+  }
+}

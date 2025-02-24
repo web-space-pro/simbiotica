@@ -21,6 +21,7 @@ module.exports = {
       'block-parts/tpl-read-us.php',
       'block-parts/tpl-contact-us.php',
       'block-parts/tpl-offer.php',
+      'block-parts/tpl-projects-list.php',
 
 
       'inc/functions-menus.php',

@@ -5,6 +5,7 @@ try {
     require("./modules/menu");
     // require("./modules/generall");
     require("./modules/woocommerce");
+    require("./modules/filter-project");
 }
 catch (e) {
     console.log('JS ERROR!!!', e);
