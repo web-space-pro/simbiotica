@@ -14,7 +14,7 @@ module.exports = {
       'front-page.php',
       'single-services.php',
       'single.php',
-      'template-parts/content.php',
+      'content-parts/content.php',
 
       'block-parts/tpl-hero.php',
       'block-parts/tpl-find-us.php',

@@ -6,39 +6,17 @@
  *
  * @package simbiotica
  */
-
-get_header();
 ?>
 
-<?php get_header(); ?>
 
-    <main id="primary" class="site-main">
-        <div class="container">
+    <?php get_header(); ?>
+    <main class="min-h-svh flex-grow-1 flex flex-col px-4 sm:px-[2.8vmax] pt-6 pb-6">
             <?php
             while ( have_posts() ) :
                 the_post();
-
                 get_template_part( 'content-parts/content', get_post_type() );
-
-                the_post_navigation(
-                    array(
-                        'prev_text' => '<span class="nav-subtitle">' . esc_html__( 'Previous:', 'simbiotica' ) . '</span> <span class="nav-title">%title</span>',
-                        'next_text' => '<span class="nav-subtitle">' . esc_html__( 'Next:', 'simbiotica' ) . '</span> <span class="nav-title">%title</span>',
-                    )
-                );
-
-                // If comments are open or we have at least one comment, load up the comment template.
-                if ( comments_open() || get_comments_number() ) :
-                    comments_template();
-                endif;
-
             endwhile;
             ?>
-        </div>
-
-
 	</main>
+    <?php get_footer(); ?>
 
-<?php
-get_sidebar();
-get_footer();

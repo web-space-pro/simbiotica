@@ -6,58 +6,51 @@
  *
  * @package simbiotica
  */
-
+$postID = get_the_ID();
+$year_create = get_field('project_yers', $postID);
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-	<header class="entry-header">
-		<?php
-		if ( is_singular() ) :
-			the_title( '<h1 class="entry-title">', '</h1>' );
-		else :
-			the_title( '<h2 class="entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h2>' );
-		endif;
+    <div class="flex flex-col md:flex-row gap-4 md:gap-16">
+        <div class="md:w-6/12 xl:w-8/12">
+            <h1 class="block md:hidden text-2xl md:text-[1.75rem] leading-tight font-medium text-black"><?php the_title(); ?></h1>
+            <?php if(!empty($year_create)):?>
+                <div class="block md:hidden font-sans text-xl md:text-2xl text-black mb-5 mt-3 md:mt-5">
+                    <span><?=$year_create?></span>
+                </div>
+            <?php endif; ?>
+            <div class="relative h-full">
+                <div class="xs:w-1/2 m-auto  md:w-full md:sticky md:top-20 2xl:top-16">
+                    <?php simbiotica_post_thumbnail(); ?>
+                    <div class="absolute z-10 top-0 right-0">
+                        <?php
+                        the_post_navigation(
+                            array(
+                                'prev_text' => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M10.5552 4.21301C10.8406 4.49703 10.8406 4.95751 10.5552 5.24153L4.495 11.2727H20.2692C20.6728 11.2727 21 11.5983 21 12C21 12.4017 20.6728 12.7273 20.2692 12.7273H4.495L10.5552 18.7585C10.8406 19.0425 10.8406 19.503 10.5552 19.787C10.2698 20.071 9.80711 20.071 9.52173 19.787L2.21404 12.5143C1.92865 12.2302 1.92865 11.7698 2.21404 11.4857L9.52173 4.21301C9.80711 3.929 10.2698 3.929 10.5552 4.21301Z" fill="#3F4042" /></svg>',
+                                'next_text' => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.4448 4.21301C12.1594 4.49703 12.1594 4.95751 12.4448 5.24153L18.505 11.2727H2.73077C2.32718 11.2727 2 11.5983 2 12C2 12.4017 2.32718 12.7273 2.73077 12.7273H18.505L12.4448 18.7585C12.1594 19.0425 12.1594 19.503 12.4448 19.787C12.7302 20.071 13.1929 20.071 13.4783 19.787L20.786 12.5143C21.0713 12.2302 21.0713 11.7698 20.786 11.4857L13.4783 4.21301C13.1929 3.929 12.7302 3.929 12.4448 4.21301Z" fill="#3F4042" /></svg>',
+                            )
+                        );
+                        ?>
+                    </div>
+                </div>
+            </div>
 
-		if ( 'post' === get_post_type() ) :
-			?>
-			<div class="entry-meta">
-				<?php
-				simbiotica_posted_on();
-				simbiotica_posted_by();
-				?>
-			</div><!-- .entry-meta -->
-		<?php endif; ?>
-	</header><!-- .entry-header -->
+        </div>
+        <div class="md:w-6/12 xl:w-4/12">
 
-	<?php simbiotica_post_thumbnail(); ?>
+            <h1 class="hidden md:block text-2xl md:text-[1.75rem] leading-tight font-medium text-black"><?php the_title(); ?></h1>
 
-	<div class="entry-content">
-		<?php
-		the_content(
-			sprintf(
-				wp_kses(
-					/* translators: %s: Name of current post. Only visible to screen readers */
-					__( 'Continue reading<span class="screen-reader-text"> "%s"</span>', 'simbiotica' ),
-					array(
-						'span' => array(
-							'class' => array(),
-						),
-					)
-				),
-				wp_kses_post( get_the_title() )
-			)
-		);
+            <?php if(!empty($year_create)):?>
+                <div class="hidden md:block font-sans text-xl md:text-2xl text-black mb-5 mt-5">
+                    <span><?=$year_create?></span>
+                </div>
+            <?php endif; ?>
 
-		wp_link_pages(
-			array(
-				'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'simbiotica' ),
-				'after'  => '</div>',
-			)
-		);
-		?>
-	</div><!-- .entry-content -->
+            <div class="max-w-full mt-4 pt-5 border-t border-gray-10 font-sans *:mb-4">
+                <?php the_content(); ?>
+            </div>
 
-	<footer class="entry-footer">
-		<?php simbiotica_entry_footer(); ?>
-	</footer><!-- .entry-footer -->
-</article><!-- #post-<?php the_ID(); ?> -->
+            <div class="hidden md:block sticky bottom-16 h-[3.438rem] text-mask"></div>
+        </div>
+    </div>
+</article>

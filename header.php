@@ -18,7 +18,7 @@
     <?php wp_head(); ?>
 </head>
 
-<body <?php body_class('antialiased font-reg font-normal bg-white-10 leading-normal text-sm xs:text-base text-black selection:bg-black selection:text-white-10'); ?> data-page-id="<?php the_ID(); ?>">
+<body <?php body_class('flex flex-col min-h-screen antialiased font-reg font-normal bg-white-10 leading-normal text-sm xs:text-base text-black selection:bg-black selection:text-white-10'); ?> data-page-id="<?php the_ID(); ?>">
 <?php wp_body_open(); ?>
 
     <?php if (!is_front_page()): ?>

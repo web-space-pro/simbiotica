@@ -11,7 +11,7 @@
 
 ?>
 <?php if (!is_front_page()): ?>
-    <footer class="flex justify-between w-full  bottom-0 md:fixed z-40 items-center flex-row xs:flex-col lg:flex-row gap-4 bg-white backdrop-blur-md px-[2.8vmax] pt-[1vmax] pb-[2.2vmax] xs:pb-[1vmax]">
+    <footer class="flex justify-between w-full  bottom-0 md:sticky z-40 items-center flex-row xs:flex-col lg:flex-row gap-4 bg-white backdrop-blur-md px-[2.8vmax] pt-[1vmax] pb-[2.2vmax] xs:pb-[1vmax]">
         <div class="flex lg:basis-4/5 justify-between items-start">
             <nav class="flex flex-row" role="navigation">
                 <?php footer_nav(); ?>
