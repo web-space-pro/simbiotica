@@ -10,7 +10,7 @@
 get_header();
 ?>
 
-	<main id="primary" class="site-main">
+    <main class="min-h-svh flex-grow-1 flex flex-col px-4 sm:px-[2.8vmax] pt-6 pb-6">
 
 		<?php if ( have_posts() ) : ?>
 
@@ -43,9 +43,7 @@ get_header();
 
 		endif;
 		?>
-
-	</main><!-- #main -->
+	</main>
 
 <?php
-get_sidebar();
 get_footer();

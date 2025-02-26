@@ -65,7 +65,7 @@ if ( function_exists('add_theme_support') ) {
     add_theme_support('menus');
 
     // Add Woocomerse Support
-     add_theme_support( 'woocommerce' );
+    add_theme_support( 'woocommerce' );
 
     // add_theme_support( 'wc-product-gallery-slider' );
 

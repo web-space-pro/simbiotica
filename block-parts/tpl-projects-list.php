@@ -121,14 +121,14 @@ $has_projects = false;
 </section>
 
 <?php
-// Очистка WP_Query, если использовали
+// Очистка WP_Query
 if ($show_project) {
     wp_reset_postdata();
 }
 ?>
 
 
-<section class="mt-7 sm:mt-10 mb-4">
+<section class="mt-7 sm:mt-10 mb-8 sm:mb-16">
     <?php
     $visited_categories = isset($_COOKIE['visited_project_cat']) ? json_decode(stripslashes($_COOKIE['visited_project_cat']), true) : [];
 

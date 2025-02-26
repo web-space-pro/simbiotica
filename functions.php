@@ -19,3 +19,4 @@ require 'inc/functions-common.php';
 require 'inc/functions-acf.php';
 
 require 'inc/woocommerce/woocommerce-cart.php';
+require 'inc/woocommerce/woocommerce-archive.php';

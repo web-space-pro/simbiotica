@@ -2,6 +2,9 @@
 add_action('wp_head', 'simbiotica_ajax_script');
 add_action('wp_ajax_simbiotica_filter_projects', 'simbiotica_filter_projects');
 add_action('wp_ajax_nopriv_simbiotica_filter_projects', 'simbiotica_filter_projects');
+
+
+
 function simbiotica_ajax_script() {
     echo '<script>var ajaxurl = "' . admin_url('admin-ajax.php') . '";</script>';
 }

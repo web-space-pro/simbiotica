@@ -31,38 +31,40 @@ document.addEventListener("DOMContentLoaded", function () {
   var filterButtons = document.querySelectorAll("[data-id]");
   var projectsContainer = document.getElementById("projects-container");
   var pageID = document.body.dataset.pageId;
-  filterButtons.forEach(function (button) {
-    button.addEventListener("click", function () {
-      var categoryId = this.getAttribute("data-id");
+  if (projectsContainer) {
+    filterButtons.forEach(function (button) {
+      button.addEventListener("click", function () {
+        var categoryId = this.getAttribute("data-id");
 
-      // Удаляем класс активной кнопки у всех, добавляем к текущей
-      filterButtons.forEach(function (btn) {
-        return btn.classList.remove("active");
-      });
-      this.classList.add("active");
+        // Удаляем класс активной кнопки у всех, добавляем к текущей
+        filterButtons.forEach(function (btn) {
+          return btn.classList.remove("active");
+        });
+        this.classList.add("active");
 
-      // Показываем лоадер
-      projectsContainer.innerHTML = '<div class="m-auto col-span-2 lg:col-span-3 loadingspinner"></div>';
-      fetch(ajaxurl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded"
-        },
-        body: new URLSearchParams({
-          action: "simbiotica_filter_projects",
-          category_id: categoryId,
-          page_id: pageID
-        })
-      }).then(function (response) {
-        return response.text();
-      }).then(function (data) {
-        projectsContainer.innerHTML = data;
-      })["catch"](function (error) {
-        console.error("Ошибка:", error);
-        projectsContainer.innerHTML = '<p class="error">Ошибка загрузки</p>';
+        // Показываем лоадер
+        projectsContainer.innerHTML = '<div class="m-auto col-span-2 lg:col-span-3 loadingspinner"></div>';
+        fetch(ajaxurl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+          },
+          body: new URLSearchParams({
+            action: "simbiotica_filter_projects",
+            category_id: categoryId,
+            page_id: pageID
+          })
+        }).then(function (response) {
+          return response.text();
+        }).then(function (data) {
+          projectsContainer.innerHTML = data;
+        })["catch"](function (error) {
+          console.error("Ошибка:", error);
+          projectsContainer.innerHTML = '<p class="error">Ошибка загрузки</p>';
+        });
       });
     });
-  });
+  }
 });
 
 /***/ }),
@@ -88,25 +90,138 @@ document.addEventListener("DOMContentLoaded", function () {
 /*!**********************************************!*\
   !*** ./assets/src/js/modules/woocommerce.js ***!
   \**********************************************/
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
+__webpack_require__(/*! ./woocommerce/loop */ "./assets/src/js/modules/woocommerce/loop.js");
+
+/***/ }),
+
+/***/ "./assets/src/js/modules/woocommerce/loop.js":
+/*!***************************************************!*\
+  !*** ./assets/src/js/modules/woocommerce/loop.js ***!
+  \***************************************************/
 /***/ (() => {
 
+document.addEventListener("DOMContentLoaded", function () {
+  updateCartCount();
+  initProductActions();
+  initCategoryFilter();
+});
 function updateCartCount() {
   fetch('/wp-admin/admin-ajax.php?action=simbiotica_get_cart_count').then(function (response) {
     return response.text();
   }).then(function (count) {
     document.getElementById('cart-count').textContent = count;
-  })["catch"](function (error) {
-    return console.error('Ошибка AJAX:', error);
+  })["catch"](console.error);
+}
+function getCartQuantity(productId, callback) {
+  fetch("/wp-admin/admin-ajax.php?action=simbiotica_get_cart_quantity&product_id=".concat(productId)).then(function (response) {
+    return response.json();
+  }).then(function (data) {
+    callback(data.quantity || 0);
+  })["catch"](function () {
+    return callback(0);
   });
 }
-
-// Обновляем количество при загрузке страницы
-updateCartCount();
-
-// Обновляем при добавлении товара в корзину
-jQuery(document).on('added_to_cart', function () {
-  updateCartCount();
-});
+function updateProductUI(productId, quantity) {
+  jQuery(function ($) {
+    $('.product-actions[data-product-id="' + productId + '"]').each(function () {
+      var wrapper = $(this);
+      var qtyInput = wrapper.find('.qty');
+      var addToCartBtn = wrapper.find('.ajax_add_to_cart');
+      var qtyWrapper = wrapper.find('.quantity-wrapper');
+      if (quantity > 0) {
+        addToCartBtn.hide().removeClass('loading');
+        qtyWrapper.removeClass('hidden-quantity');
+        qtyInput.val(quantity);
+      } else {
+        addToCartBtn.show().removeClass('loading');
+        qtyWrapper.addClass('hidden-quantity');
+        qtyInput.val(0);
+      }
+    });
+  });
+}
+function initProductActions() {
+  jQuery(function ($) {
+    $('.product-actions').each(function () {
+      var wrapper = $(this);
+      var qtyInput = wrapper.find('.qty');
+      var plus = wrapper.find('.qty-plus');
+      var minus = wrapper.find('.qty-minus');
+      var productId = wrapper.data('product-id');
+      function updateCart(quantity) {
+        $.post(wc_add_to_cart_params.ajax_url, {
+          action: 'simbiotica_update_cart_quantity',
+          product_id: productId,
+          quantity: quantity
+        }).done(function () {
+          $(document.body).trigger('wc_fragment_refresh');
+          updateCartCount();
+          updateProductUI(productId, quantity);
+        });
+      }
+      function changeQuantity(delta) {
+        var currentQty = parseInt(qtyInput.val()) || 0;
+        var newQty = Math.max(0, currentQty + delta);
+        qtyInput.val(newQty);
+        updateCart(newQty);
+      }
+      getCartQuantity(productId, function (quantity) {
+        return updateProductUI(productId, quantity);
+      });
+      plus.off('click').on('click', function () {
+        return changeQuantity(1);
+      });
+      minus.off('click').on('click', function () {
+        return changeQuantity(-1);
+      });
+    });
+    $(document.body).off('added_to_cart').on('added_to_cart', function (event, fragments, cart_hash, button) {
+      var productId = button.data('product_id');
+      if (productId) {
+        updateProductUI(productId, 1);
+      }
+      updateCartCount();
+    });
+  });
+}
+function initCategoryFilter() {
+  var categoryWrap = document.querySelector('.filter-product');
+  if (!categoryWrap) return;
+  var filterButtons = categoryWrap.querySelectorAll("[data-id]");
+  var productsContainer = document.getElementById("products-list");
+  var pageID = document.body.dataset.pageId;
+  filterButtons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      var categoryId = this.getAttribute("data-id");
+      filterButtons.forEach(function (btn) {
+        return btn.classList.remove("active");
+      });
+      this.classList.add("active");
+      productsContainer.innerHTML = '<div class="m-auto col-span-2 lg:col-span-3 loadingspinner"></div>';
+      fetch(ajaxurl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: new URLSearchParams({
+          action: "simbiotica_filter_products_by_category",
+          category_id: categoryId,
+          page_id: pageID
+        })
+      }).then(function (response) {
+        return response.text();
+      }).then(function (data) {
+        productsContainer.innerHTML = data;
+        initProductActions();
+      })["catch"](function (error) {
+        console.error("Ошибка:", error);
+        productsContainer.innerHTML = '<p class="error">Ошибка загрузки</p>';
+      });
+    });
+  });
+}
 
 /***/ }),
 

@@ -23,6 +23,11 @@ module.exports = {
       'block-parts/tpl-offer.php',
       'block-parts/tpl-projects-list.php',
 
+      'woocommerce/archive-product.php',
+      'woocommerce/content-product.php',
+      'woocommerce/loop/price.php',
+      'woocommerce/loop/loop-start.php',
+      'woocommerce/loop/loop-end.php',
 
       'inc/functions-menus.php',
     ],

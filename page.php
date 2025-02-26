@@ -31,7 +31,7 @@ get_header();
                 }
             else:
                 ?>
-                <section style="display: none">
+                <section>
                     <?php get_template_part( 'content-parts/content', get_post_type('page') ); ?>
                 </section>
             <?php
