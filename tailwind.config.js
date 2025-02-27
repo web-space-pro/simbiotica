@@ -31,6 +31,7 @@ module.exports = {
       'woocommerce/single-product/add-to-cart/simple.php',
       'woocommerce/cart/cart.php',
       'woocommerce/cart/cart-totals.php',
+      'woocommerce/checkout/form-checkout.php',
 
 
 

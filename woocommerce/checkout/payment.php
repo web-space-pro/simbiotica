@@ -21,9 +21,9 @@ if ( ! wp_doing_ajax() ) {
 	do_action( 'woocommerce_review_order_before_payment' );
 }
 ?>
-<div id="payment" class="woocommerce-checkout-payment">
+<div id="" class="woocommerce-checkout-payment">
 	<?php if ( WC()->cart->needs_payment() ) : ?>
-		<ul class="wc_payment_methods payment_methods methods">
+		<ul class="wc_payment_methods payment_methods methods hidden">
 			<?php
 			if ( ! empty( $available_gateways ) ) {
 				foreach ( $available_gateways as $gateway ) {
@@ -50,7 +50,18 @@ if ( ! wp_doing_ajax() ) {
 
 		<?php do_action( 'woocommerce_review_order_before_submit' ); ?>
 
-		<?php echo apply_filters( 'woocommerce_order_button_html', '<button type="submit" class="button alt' . esc_attr( wc_wp_theme_get_element_class_name( 'button' ) ? ' ' . wc_wp_theme_get_element_class_name( 'button' ) : '' ) . '" name="woocommerce_checkout_place_order" id="place_order" value="' . esc_attr( $order_button_text ) . '" data-value="' . esc_attr( $order_button_text ) . '">' . esc_html( $order_button_text ) . '</button>' ); // @codingStandardsIgnoreLine ?>
+
+        <div class="flex flex-row justify-between items-center">
+            <div>
+                <button type="submit" class="cursor-pointer text-center px-6 py-2 border border-black bg-black text-white-10 block sm:inline-block  text-base font-medium font-reg lowercase transition ease-in-out duration-500 hover:bg-transparent hover:text-black" name="woocommerce_checkout_place_order" id="place_order">
+                    Оформить заказ
+                </button>
+            </div>
+            <div class="font-sans text-right">
+                <p class="text-xs text-gray-20">итого с учетом доставки</p>
+                <p class="text-black font-medium"><?= WC()->cart->get_total(); ?></p>
+            </div>
+        </div>
 
 		<?php do_action( 'woocommerce_review_order_after_submit' ); ?>
 
