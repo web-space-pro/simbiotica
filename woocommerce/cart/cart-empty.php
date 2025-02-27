@@ -23,8 +23,8 @@ defined( 'ABSPATH' ) || exit;
 do_action( 'woocommerce_cart_is_empty' );
 
 if ( wc_get_page_id( 'shop' ) > 0 ) : ?>
-	<p class="return-to-shop">
-		<a class="button wc-backward<?php echo esc_attr( wc_wp_theme_get_element_class_name( 'button' ) ? ' ' . wc_wp_theme_get_element_class_name( 'button' ) : '' ); ?>" href="<?php echo esc_url( apply_filters( 'woocommerce_return_to_shop_redirect', wc_get_page_permalink( 'shop' ) ) ); ?>">
+	<div class="return-to-shop mt-16 text-center">
+		<a class="cursor-pointer text-center px-6 py-2 border border-black bg-black text-white-10 block sm:inline-block  text-base font-medium font-reg lowercase transition ease-in-out duration-500 hover:bg-transparent hover:text-black wc-backward<?php echo esc_attr( wc_wp_theme_get_element_class_name( 'button' ) ? ' ' . wc_wp_theme_get_element_class_name( 'button' ) : '' ); ?>" href="<?php echo esc_url( apply_filters( 'woocommerce_return_to_shop_redirect', wc_get_page_permalink( 'shop' ) ) ); ?>">
 			<?php
 				/**
 				 * Filter "Return To Shop" text.
@@ -35,5 +35,5 @@ if ( wc_get_page_id( 'shop' ) > 0 ) : ?>
 				echo esc_html( apply_filters( 'woocommerce_return_to_shop_text', __( 'Return to shop', 'woocommerce' ) ) );
 			?>
 		</a>
-	</p>
+	</div>
 <?php endif; ?>

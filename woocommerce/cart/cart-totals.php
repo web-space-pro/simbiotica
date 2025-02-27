@@ -17,14 +17,50 @@
 
 defined( 'ABSPATH' ) || exit;
 
+function get_cart_count_text() {
+    $count = WC()->cart->get_cart_contents_count();
+    $word = 'товаров';
+
+    if ($count % 10 == 1 && $count % 100 != 11) {
+        $word = 'товар';
+    } elseif ($count % 10 >= 2 && $count % 10 <= 4 && ($count % 100 < 10 || $count % 100 >= 20)) {
+        $word = 'товара';
+    }
+
+    return $count . ' ' . $word;
+}
 ?>
 <div class="cart_totals <?php echo ( WC()->customer->has_calculated_shipping() ) ? 'calculated_shipping' : ''; ?>">
 
 	<?php do_action( 'woocommerce_before_cart_totals' ); ?>
+    <div>
+        <div class="flex justify-between font-sans font-medium">
+            <div class="md:w-1/3">
+                <?php echo get_cart_count_text(); ?>
+            </div>
+            <div class="md:w-2/3">
+                <?php do_action( 'woocommerce_cart_totals_before_order_total' ); ?>
 
-	<h2><?php esc_html_e( 'Cart totals', 'woocommerce' ); ?></h2>
+                <div class="order-total lg:pl-[6svh]">
+                    <span data-title="<?php esc_attr_e( 'Total', 'woocommerce' ); ?>"><?php wc_cart_totals_order_total_html(); ?></span>
+                </div>
 
-	<table cellspacing="0" class="shop_table shop_table_responsive">
+                <?php do_action( 'woocommerce_cart_totals_after_order_total' ); ?>
+            </div>
+        </div>
+        <div class="flex gap-2 xs:gap-4 mt-6 flex-col xs:flex-row justify-between md:justify-start">
+            <div>
+                <a class="cursor-pointer text-center px-6 py-2 border border-black bg-black text-white-10 block sm:inline-block  text-base font-medium font-reg lowercase transition ease-in-out duration-500 hover:bg-transparent hover:text-black" href="<?php echo wc_get_checkout_url(); ?>" target="_self" > оформление заказа</a>
+            </div>
+            <div>
+                <a href="/" target="_blank" class="inline-block w-full text-center relative font-medium transition-all before:content-[''] before:duration-300 before:ease-out before:top-0 before:left-0 before:bottom-0 before:w-0 before:absolute before:h-full hover:before:w-full hover:before:bg-black">
+                    <span class="px-6 py-2 border border-black inline-block w-full hover:text-white-10 relative top-0 left-0 transition-all">получить коммерческое предложение</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+	<table cellspacing="0" class=" hidden shop_table shop_table_responsive">
 
 		<tr class="cart-subtotal">
 			<th><?php esc_html_e( 'Subtotal', 'woocommerce' ); ?></th>
@@ -102,10 +138,6 @@ defined( 'ABSPATH' ) || exit;
 		<?php do_action( 'woocommerce_cart_totals_after_order_total' ); ?>
 
 	</table>
-
-	<div class="wc-proceed-to-checkout">
-		<?php do_action( 'woocommerce_proceed_to_checkout' ); ?>
-	</div>
 
 	<?php do_action( 'woocommerce_after_cart_totals' ); ?>
 

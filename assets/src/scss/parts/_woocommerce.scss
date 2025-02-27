@@ -80,6 +80,8 @@ input[type="number"] {
  cursor: pointer;
  font-size: 14px;
  line-height: 1;
+ display: flex;
+ align-items: center;
  svg{
   margin: 0 auto;
  }

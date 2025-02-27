@@ -29,6 +29,8 @@ module.exports = {
       'woocommerce/loop/loop-start.php',
       'woocommerce/loop/loop-end.php',
       'woocommerce/single-product/add-to-cart/simple.php',
+      'woocommerce/cart/cart.php',
+      'woocommerce/cart/cart-totals.php',
 
 
 

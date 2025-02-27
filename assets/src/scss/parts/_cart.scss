@@ -1,0 +1,25 @@
+.woocommerce-cart{
+ table{
+  thead{
+   @apply hidden;
+  }
+ }
+ .wc-block-components-product-metadata{
+  //@apply hidden;
+ }
+ .quantity .qty {
+  width: auto;
+  text-align: center;
+  border: 0;
+  pointer-events: none;
+  @apply text-base xl:text-xl;
+ }
+ .qty-minus,
+ .qty-plus {
+  @apply xl:w-10 xl:h-10;
+ }
+ .cart-collaterals .cart_totals{
+  @apply float-none w-full xs:w-5/6 lg:w-1/2;
+  margin: 0 0 0 auto;
+ }
+}

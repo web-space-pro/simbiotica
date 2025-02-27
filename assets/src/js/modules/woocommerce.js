@@ -1,4 +1,5 @@
 require("./woocommerce/loop");
+require("./woocommerce/cart");
 
 document.addEventListener('DOMContentLoaded', function () {
     let noticesWrapper = document.querySelector('.woocommerce-notices-wrapper');
