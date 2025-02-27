@@ -15,9 +15,48 @@ try {
   // require("./modules/generall");
   __webpack_require__(/*! ./modules/woocommerce */ "./assets/src/js/modules/woocommerce.js");
   __webpack_require__(/*! ./modules/filter-project */ "./assets/src/js/modules/filter-project.js");
+  __webpack_require__(/*! ./modules/custom-select */ "./assets/src/js/modules/custom-select.js");
 } catch (e) {
   console.log('JS ERROR!!!', e);
 }
+
+/***/ }),
+
+/***/ "./assets/src/js/modules/custom-select.js":
+/*!************************************************!*\
+  !*** ./assets/src/js/modules/custom-select.js ***!
+  \************************************************/
+/***/ (() => {
+
+document.addEventListener("DOMContentLoaded", function () {
+  var customSelect = document.querySelector(".custom-select");
+  if (customSelect) {
+    var trigger = customSelect.querySelector(".custom-select-trigger");
+    var options = customSelect.querySelector(".custom-options");
+    var input = customSelect.querySelector("input[name='product_equipment']");
+    var optionItems = options.querySelectorAll(".custom-option");
+    // Открытие списка при клике
+    trigger.addEventListener("click", function () {
+      options.classList.toggle("hidden");
+    });
+
+    // Выбор элемента из списка
+    optionItems.forEach(function (option) {
+      option.addEventListener("click", function () {
+        trigger.textContent = this.textContent;
+        input.value = this.dataset.value;
+        options.classList.add("hidden");
+      });
+    });
+
+    // Закрытие списка при клике вне его области
+    document.addEventListener("click", function (e) {
+      if (!customSelect.contains(e.target)) {
+        options.classList.add("hidden");
+      }
+    });
+  }
+});
 
 /***/ }),
 
@@ -93,6 +132,31 @@ document.addEventListener("DOMContentLoaded", function () {
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
 __webpack_require__(/*! ./woocommerce/loop */ "./assets/src/js/modules/woocommerce/loop.js");
+document.addEventListener('DOMContentLoaded', function () {
+  var noticesWrapper = document.querySelector('.woocommerce-notices-wrapper');
+  if (noticesWrapper) {
+    // Изначально скрываем блок
+
+    // Показываем блок, если он содержит сообщения
+    if (noticesWrapper.innerHTML.trim() !== '') {
+      setTimeout(function () {
+        noticesWrapper.style.opacity = '1';
+        noticesWrapper.style.visibility = 'visible';
+        noticesWrapper.style.transform = 'translateY(0)';
+        noticesWrapper.style.height = 'auto';
+
+        // Скрываем через 3 секунды
+        setTimeout(function () {
+          noticesWrapper.style.opacity = '0';
+          noticesWrapper.style.transform = 'translateY(-20px)';
+          setTimeout(function () {
+            noticesWrapper.style.visibility = 'hidden';
+          }, 500);
+        }, 3000);
+      }, 100);
+    }
+  }
+});
 
 /***/ }),
 

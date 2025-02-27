@@ -20,3 +20,4 @@ require 'inc/functions-acf.php';
 
 require 'inc/woocommerce/woocommerce-cart.php';
 require 'inc/woocommerce/woocommerce-archive.php';
+require 'inc/woocommerce/woocommerce-single-product.php';

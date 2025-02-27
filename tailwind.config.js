@@ -28,8 +28,12 @@ module.exports = {
       'woocommerce/loop/price.php',
       'woocommerce/loop/loop-start.php',
       'woocommerce/loop/loop-end.php',
+      'woocommerce/single-product/add-to-cart/simple.php',
+
+
 
       'inc/functions-menus.php',
+      'inc/woocommerce/woocommerce-single-product.php',
     ],
   },
   darkMode: false,

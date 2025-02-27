@@ -153,8 +153,24 @@ a.link{
 }
 
 
-//Single page : project
-.single-projects{
+//Single page : project, product
+.single-product{
+  .site-main, .content-area{
+    @apply h-full;
+  }
+  .add_to_cart_mobile{
+    .btn_add_to_cart{
+      @apply block md:hidden;
+    }
+    .in-stock{
+      @apply hidden;
+    }
+  }
+  form{
+    margin-bottom: 0!important;
+  }
+}
+.single-projects, .single-product{
   .post-thumbnail{
     @apply bg-[#F6F6F6] border border-gray-10 md:h-[65svh] xl:h-[75svh];
     img{
@@ -170,10 +186,70 @@ a.link{
       @apply border border-gray-10 p-1.5 inline-block;
     }
   }
+  ins{
+    text-decoration: none;
+  }
+  del{
+    @apply text-xs;
+  }
 }
 .text-mask::after {
   content: "";
   background: linear-gradient(180deg, rgba(242, 242, 240, 0) 0%, #f2f2f0 100%);
   transition: opacity 0.3s;
   @apply absolute bottom-0 left-0 w-full h-[4.6rem] pointer-events-none ;
+}
+
+//.custom-select-trigger {
+//  background-color: transparent;
+//  color: black;
+//  border: 1px solid black;
+//  padding: 8px 12px;
+//  font-size: 16px;
+//  display: flex;
+//  justify-content: space-between;
+//  align-items: center;
+//  position: relative;
+//}
+//
+.custom-select-trigger::after {
+  content: "▼";
+  font-size: 14px;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+//
+//.custom-options {
+//  position: absolute;
+//  top: 100%;
+//  left: 0;
+//  width: 100%;
+//  background: white;
+//  border: 1px solid black;
+//  display: none;
+//  z-index: 10;
+//}
+//
+//.custom-options.active {
+//  display: block;
+//}
+//
+//.custom-option {
+//  padding: 8px 12px;
+//  background: yellow;
+//  color: black;
+//  font-size: 12px;
+//  cursor: pointer;
+//  transition: background 0.2s;
+//}
+//
+//.custom-option:hover {
+//  background: orange;
+//}
+
+.woocommerce-notices-wrapper {
+  @apply opacity-0 invisible translate-y-[-20px] transition-all duration-500 ease-in-out h-0 max-w-[300px] absolute top-[20px] right-[20px] z-[50] text-[14px] leading-[1.25];
 }
