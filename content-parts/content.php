@@ -69,7 +69,7 @@ if (!is_cart() && !is_checkout() && !is_wc_endpoint_url('order-received') && !is
 
                     </div>
                 <?php else: ?>
-                    <h1 class="text-2xl md:text-[1.75rem] leading-tight font-medium text-black"><?php the_title(); ?></h1>
+                    <h1 class="text-2xl md:text-[1.75rem] lowercase leading-tight font-medium text-black"><?php the_title(); ?></h1>
                 <?php endif; ?>
                 <div class="max-w-full mt-4 pt-5 border-t border-gray-10 font-sans *:mb-4">
                     <?php the_content(); ?>

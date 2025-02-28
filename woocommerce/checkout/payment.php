@@ -51,13 +51,13 @@ if ( ! wp_doing_ajax() ) {
 		<?php do_action( 'woocommerce_review_order_before_submit' ); ?>
 
 
-        <div class="flex flex-row justify-between items-center">
-            <div>
+        <div class="flex flex-col-reverse xs:flex-row gap-4 md:flex-row justify-between items-center mt-4 lg:mt-20">
+            <div class="w-full xs:w-auto">
                 <button type="submit" class="cursor-pointer text-center px-6 py-2 border border-black bg-black text-white-10 block sm:inline-block  text-base font-medium font-reg lowercase transition ease-in-out duration-500 hover:bg-transparent hover:text-black" name="woocommerce_checkout_place_order" id="place_order">
                     Оформить заказ
                 </button>
             </div>
-            <div class="font-sans text-right">
+            <div class="font-sans text-right w-full xs:w-auto">
                 <p class="text-xs text-gray-20">итого с учетом доставки</p>
                 <p class="text-black font-medium"><?= WC()->cart->get_total(); ?></p>
             </div>

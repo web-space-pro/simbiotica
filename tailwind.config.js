@@ -32,6 +32,7 @@ module.exports = {
       'woocommerce/cart/cart.php',
       'woocommerce/cart/cart-totals.php',
       'woocommerce/checkout/form-checkout.php',
+      'woocommerce/checkout/payment.php',
 
 
 

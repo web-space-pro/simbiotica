@@ -572,6 +572,9 @@ video {
 .mt-2{
   margin-top: 0.5rem;
 }
+.mt-20{
+  margin-top: 5rem;
+}
 .mt-3{
   margin-top: 0.75rem;
 }
@@ -590,8 +593,8 @@ video {
 .mt-8{
   margin-top: 2rem;
 }
-.mt-20{
-  margin-top: 5rem;
+.mt-0{
+  margin-top: 0px;
 }
 .block{
   display: block;
@@ -649,9 +652,6 @@ video {
 }
 .w-24{
   width: 6rem;
-}
-.w-4{
-  width: 1rem;
 }
 .w-6{
   width: 1.5rem;
@@ -722,6 +722,9 @@ video {
 }
 .flex-col{
   flex-direction: column;
+}
+.flex-col-reverse{
+  flex-direction: column-reverse;
 }
 .flex-wrap{
   flex-wrap: wrap;
@@ -922,6 +925,9 @@ video {
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
 }
+.pb-2{
+  padding-bottom: 0.5rem;
+}
 .pb-5{
   padding-bottom: 1.25rem;
 }
@@ -937,6 +943,9 @@ video {
 .pr-8{
   padding-right: 2rem;
 }
+.pt-3\.5{
+  padding-top: 0.875rem;
+}
 .pt-4{
   padding-top: 1rem;
 }
@@ -951,12 +960,6 @@ video {
 }
 .pt-\[2\.8vmax\]{
   padding-top: 2.8vmax;
-}
-.pb-4{
-  padding-bottom: 1rem;
-}
-.pb-2{
-  padding-bottom: 0.5rem;
 }
 .text-center{
   text-align: center;
@@ -1177,22 +1180,7 @@ b, strong{
   line-height: 1;
 }
 
-.woocommerce-cart-form button.button input[type=text],
-.woocommerce-cart-form button.button input[type=email],
-.woocommerce-cart-form button.button input[type=url],
-.woocommerce-cart-form button.button input[type=password],
-.woocommerce-cart-form button.button input[type=search],
-.woocommerce-cart-form button.button input[type=number],
-.woocommerce-cart-form button.button input[type=tel],
-.woocommerce-cart-form button.button input[type=range],
-.woocommerce-cart-form button.button input[type=date],
-.woocommerce-cart-form button.button input[type=month],
-.woocommerce-cart-form button.button input[type=week],
-.woocommerce-cart-form button.button input[type=time],
-.woocommerce-cart-form button.button input[type=datetime],
-.woocommerce-cart-form button.button input[type=datetime-local],
-.woocommerce-cart-form button.button input[type=color],
-.woocommerce-cart-form button.button textarea, form input[type=text],
+form input[type=text],
 form input[type=email],
 form input[type=url],
 form input[type=password],
@@ -1207,7 +1195,22 @@ form input[type=time],
 form input[type=datetime],
 form input[type=datetime-local],
 form input[type=color],
-form textarea{
+form textarea, .woocommerce form input[type=text],
+.woocommerce form input[type=email],
+.woocommerce form input[type=url],
+.woocommerce form input[type=password],
+.woocommerce form input[type=search],
+.woocommerce form input[type=number],
+.woocommerce form input[type=tel],
+.woocommerce form input[type=range],
+.woocommerce form input[type=date],
+.woocommerce form input[type=month],
+.woocommerce form input[type=week],
+.woocommerce form input[type=time],
+.woocommerce form input[type=datetime],
+.woocommerce form input[type=datetime-local],
+.woocommerce form input[type=color],
+.woocommerce form textarea{
   display: inline-block;
   width: 100%;
   border-bottom-width: 1px;
@@ -1225,22 +1228,7 @@ form textarea{
   color: rgb(63 64 66 / var(--tw-text-opacity, 1));
 }
 
-.woocommerce-cart-form button.button input[type=text]:focus,
-.woocommerce-cart-form button.button input[type=email]:focus,
-.woocommerce-cart-form button.button input[type=url]:focus,
-.woocommerce-cart-form button.button input[type=password]:focus,
-.woocommerce-cart-form button.button input[type=search]:focus,
-.woocommerce-cart-form button.button input[type=number]:focus,
-.woocommerce-cart-form button.button input[type=tel]:focus,
-.woocommerce-cart-form button.button input[type=range]:focus,
-.woocommerce-cart-form button.button input[type=date]:focus,
-.woocommerce-cart-form button.button input[type=month]:focus,
-.woocommerce-cart-form button.button input[type=week]:focus,
-.woocommerce-cart-form button.button input[type=time]:focus,
-.woocommerce-cart-form button.button input[type=datetime]:focus,
-.woocommerce-cart-form button.button input[type=datetime-local]:focus,
-.woocommerce-cart-form button.button input[type=color]:focus,
-.woocommerce-cart-form button.button textarea:focus, form input[type=text]:focus,
+form input[type=text]:focus,
 form input[type=email]:focus,
 form input[type=url]:focus,
 form input[type=password]:focus,
@@ -1255,35 +1243,54 @@ form input[type=time]:focus,
 form input[type=datetime]:focus,
 form input[type=datetime-local]:focus,
 form input[type=color]:focus,
-form textarea:focus{
+form textarea:focus, .woocommerce form input[type=text]:focus,
+.woocommerce form input[type=email]:focus,
+.woocommerce form input[type=url]:focus,
+.woocommerce form input[type=password]:focus,
+.woocommerce form input[type=search]:focus,
+.woocommerce form input[type=number]:focus,
+.woocommerce form input[type=tel]:focus,
+.woocommerce form input[type=range]:focus,
+.woocommerce form input[type=date]:focus,
+.woocommerce form input[type=month]:focus,
+.woocommerce form input[type=week]:focus,
+.woocommerce form input[type=time]:focus,
+.woocommerce form input[type=datetime]:focus,
+.woocommerce form input[type=datetime-local]:focus,
+.woocommerce form input[type=color]:focus,
+.woocommerce form textarea:focus{
   background-color: transparent;
 }
-.woocommerce-cart-form button.button textarea, form textarea{
+form textarea, .woocommerce form textarea{
   height: 6rem;
   resize: none;
 }
-.woocommerce-cart-form button.button input::-moz-placeholder, form input::-moz-placeholder{
+form input::-moz-placeholder, .woocommerce form input::-moz-placeholder{
   font-family: NotoSansMono, sans-serif;
   font-size: 1rem;
   line-height: 1.5rem;
   --tw-text-opacity: 1;
   color: rgb(175 175 175 / var(--tw-text-opacity, 1));
 }
-.woocommerce-cart-form button.button input::placeholder, form input::placeholder{
+form input::placeholder, .woocommerce form input::placeholder{
   font-family: NotoSansMono, sans-serif;
   font-size: 1rem;
   line-height: 1.5rem;
   --tw-text-opacity: 1;
   color: rgb(175 175 175 / var(--tw-text-opacity, 1));
 }
-.woocommerce-cart-form button.button input:-webkit-autofill, form input:-webkit-autofill {
+form input:-webkit-autofill, .woocommerce form input:-webkit-autofill {
   background-color: transparent !important;
 }
-.woocommerce-cart-form button.button button,
-.woocommerce-cart-form button.button input[type=button],
-.woocommerce-cart-form button.button input[type=submit], form button,
+form button.button,
+form .woocommerce-Button.button,
+form button,
 form input[type=button],
-form input[type=submit]{
+form input[type=submit], .woocommerce form button.button,
+.woocommerce form .woocommerce-Button.button,
+.woocommerce form button,
+.woocommerce form input[type=button],
+.woocommerce form input[type=submit]{
   display: inline-block;
   width: 100%;
   cursor: pointer;
@@ -1309,37 +1316,26 @@ form input[type=submit]{
   transition-duration: 500ms;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
-.woocommerce-cart-form button.button button:hover,
-.woocommerce-cart-form button.button input[type=button]:hover,
-.woocommerce-cart-form button.button input[type=button]:active,
-.woocommerce-cart-form button.button input[type=button]:focus,
-.woocommerce-cart-form button.button input[type=submit]:active,
-.woocommerce-cart-form button.button input[type=submit]:hover, form button:hover,
+form button.button:hover,
+form .woocommerce-Button.button:hover,
+form button:hover,
 form input[type=button]:hover,
 form input[type=button]:active,
 form input[type=button]:focus,
 form input[type=submit]:active,
-form input[type=submit]:hover{
+form input[type=submit]:hover, .woocommerce form button.button:hover,
+.woocommerce form .woocommerce-Button.button:hover,
+.woocommerce form button:hover,
+.woocommerce form input[type=button]:hover,
+.woocommerce form input[type=button]:active,
+.woocommerce form input[type=button]:focus,
+.woocommerce form input[type=submit]:active,
+.woocommerce form input[type=submit]:hover{
   background-color: transparent;
   --tw-text-opacity: 1;
   color: rgb(0 0 0 / var(--tw-text-opacity, 1));
 }
-.woocommerce-cart-form button.button input[type=text]:focus,
-.woocommerce-cart-form button.button input[type=email]:focus,
-.woocommerce-cart-form button.button input[type=url]:focus,
-.woocommerce-cart-form button.button input[type=password]:focus,
-.woocommerce-cart-form button.button input[type=search]:focus,
-.woocommerce-cart-form button.button input[type=number]:focus,
-.woocommerce-cart-form button.button input[type=tel]:focus,
-.woocommerce-cart-form button.button input[type=range]:focus,
-.woocommerce-cart-form button.button input[type=date]:focus,
-.woocommerce-cart-form button.button input[type=month]:focus,
-.woocommerce-cart-form button.button input[type=week]:focus,
-.woocommerce-cart-form button.button input[type=time]:focus,
-.woocommerce-cart-form button.button input[type=datetime]:focus,
-.woocommerce-cart-form button.button input[type=datetime-local]:focus,
-.woocommerce-cart-form button.button input[type=color]:focus,
-.woocommerce-cart-form button.button textarea:focus, form input[type=text]:focus,
+form input[type=text]:focus,
 form input[type=email]:focus,
 form input[type=url]:focus,
 form input[type=password]:focus,
@@ -1354,7 +1350,22 @@ form input[type=time]:focus,
 form input[type=datetime]:focus,
 form input[type=datetime-local]:focus,
 form input[type=color]:focus,
-form textarea:focus {
+form textarea:focus, .woocommerce form input[type=text]:focus,
+.woocommerce form input[type=email]:focus,
+.woocommerce form input[type=url]:focus,
+.woocommerce form input[type=password]:focus,
+.woocommerce form input[type=search]:focus,
+.woocommerce form input[type=number]:focus,
+.woocommerce form input[type=tel]:focus,
+.woocommerce form input[type=range]:focus,
+.woocommerce form input[type=date]:focus,
+.woocommerce form input[type=month]:focus,
+.woocommerce form input[type=week]:focus,
+.woocommerce form input[type=time]:focus,
+.woocommerce form input[type=datetime]:focus,
+.woocommerce form input[type=datetime-local]:focus,
+.woocommerce form input[type=color]:focus,
+.woocommerce form textarea:focus {
   outline: none;
   --tw-border-opacity: 1;
   border-color: rgb(0 0 0 / var(--tw-border-opacity, 1));
@@ -1406,6 +1417,38 @@ form .wpcf7-response-output{
   line-height: 1.25rem;
   --tw-text-opacity: 1;
   color: rgb(107 114 128 / var(--tw-text-opacity, 1));
+}
+
+.woocommerce form .form-row{
+  margin: 0px;
+  margin-bottom: 1.5rem;
+  padding: 0px;
+}
+.woocommerce form input{
+  text-transform: lowercase;
+}
+.woocommerce form #order_comments{
+  height: 6rem;
+  resize: none;
+  padding-top: 0.75rem;
+  vertical-align: top;
+  text-transform: lowercase;
+}
+
+.woocommerce-checkout .woocommerce-NoticeGroup,
+.woocommerce-checkout .woocommerce-NoticeGroup-checkout {
+  display: none !important;
+}
+.woocommerce-checkout #woocommerce-checkout {
+  opacity: 1 !important;
+}
+.woocommerce-checkout .blockUI.blockOverlay {
+  display: none !important;
+}
+
+.woocommerce form .form-row.woocommerce-validated .select2-container, .woocommerce form .form-row.woocommerce-validated input.input-text, .woocommerce form .form-row.woocommerce-validated select{
+  --tw-border-opacity: 1;
+  border-color: rgb(0 0 0 / var(--tw-border-opacity, 1));
 }
 
 li.product .product-image img{
@@ -2028,6 +2071,9 @@ a.link:hover{
   .xs\:ml-\[7vmax\]{
     margin-left: 7vmax;
   }
+  .xs\:mt-16{
+    margin-top: 4rem;
+  }
   .xs\:flex{
     display: flex;
   }
@@ -2051,6 +2097,9 @@ a.link:hover{
   }
   .xs\:w-full{
     width: 100%;
+  }
+  .xs\:w-auto{
+    width: auto;
   }
   .xs\:max-w-\[25\%\]{
     max-width: 25%;
@@ -2081,6 +2130,9 @@ a.link:hover{
   }
   .xs\:pr-\[7vmax\]{
     padding-right: 7vmax;
+  }
+  .xs\:pt-3\.5{
+    padding-top: 0.875rem;
   }
   .xs\:text-2xl{
     font-size: 1.5rem;
@@ -2167,6 +2219,9 @@ a.link:hover{
   }
   .sm\:w-auto{
     width: auto;
+  }
+  .sm\:w-1\/2{
+    width: 50%;
   }
   .sm\:max-w-72{
     max-width: 18rem;
@@ -2285,6 +2340,9 @@ a.link:hover{
   .md\:w-full{
     width: 100%;
   }
+  .md\:w-1\/2{
+    width: 50%;
+  }
   .md\:basis-1\/2{
     flex-basis: 50%;
   }
@@ -2326,6 +2384,9 @@ a.link:hover{
   .lg\:col-span-3{
     grid-column: span 3 / span 3;
   }
+  .lg\:mt-20{
+    margin-top: 5rem;
+  }
   .lg\:w-1\/2{
     width: 50%;
   }
@@ -2343,6 +2404,9 @@ a.link:hover{
   }
   .lg\:pl-\[6svh\]{
     padding-left: 6svh;
+  }
+  .lg\:pr-20{
+    padding-right: 5rem;
   }
   .lg\:text-\[2\.5rem\]{
     font-size: 2.5rem;

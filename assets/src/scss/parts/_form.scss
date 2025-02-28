@@ -1,5 +1,5 @@
 
-.woocommerce-cart-form button.button, form{
+ form, .woocommerce form{
   input[type="text"],
   input[type="email"],
   input[type="url"],
@@ -28,7 +28,8 @@
   input:-webkit-autofill {
     background-color: transparent !important;
   }
-
+  button.button,
+  .woocommerce-Button.button,
   button,
   input[type="button"],
   input[type="submit"] {
@@ -37,6 +38,8 @@
 
   //button:active,
   //button:focus,
+  button.button:hover,
+  .woocommerce-Button.button:hover,
   button:hover,
   input[type="button"]:hover,
   input[type="button"]:active,
@@ -96,3 +99,34 @@ form{
     @apply text-sm text-gray-500 !m-0 !border-none !p-2.5;
   }
 }
+
+
+ .woocommerce{
+   form{
+     .form-row{
+       @apply p-0 m-0 mb-6;
+     }
+     input{
+       @apply lowercase;
+     }
+     #order_comments {
+       @apply h-24 resize-none pt-3 align-top lowercase;
+     }
+   }
+ }
+
+ .woocommerce-checkout{
+   .woocommerce-NoticeGroup,
+   .woocommerce-NoticeGroup-checkout {
+     display: none !important;
+   }
+   #woocommerce-checkout {
+     opacity: 1 !important;
+   }
+   .blockUI.blockOverlay {
+     display: none !important;
+   }
+ }
+ .woocommerce form .form-row.woocommerce-validated .select2-container, .woocommerce form .form-row.woocommerce-validated input.input-text, .woocommerce form .form-row.woocommerce-validated select {
+   @apply border-black;
+ }

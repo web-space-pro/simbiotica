@@ -73,26 +73,26 @@ jQuery(document).ready(function ($) {
 
         let cartItemKey = $input.attr("name").match(/\[([a-zA-Z0-9]+)\]\[qty\]/)[1];
 
-        $.ajax({
-            type: "POST",
-            url: wc_cart_params.ajax_url,
-            data: {
-                action: "update_cart_shop",
-                hash: cartItemKey,
-                quantity: newVal,
-            },
-            success: function (response) {
-                if (response.success && response.data.fragments) {
-                    $.each(response.data.fragments, function (key, value) {
-                        $(key).replaceWith(value);
-                    });
-                } else {
-                    console.warn("Ошибка обновления корзины:", response.data.message);
-                }
-            },
-            error: function (xhr) {
-                console.error("Ошибка AJAX:", xhr.responseText);
-            },
-        });
+        // $.ajax({
+        //     type: "POST",
+        //     url: wc_cart_params.ajax_url,
+        //     data: {
+        //         action: "update_cart_shop",
+        //         hash: cartItemKey,
+        //         quantity: newVal,
+        //     },
+        //     success: function (response) {
+        //         if (response.success && response.data.fragments) {
+        //             $.each(response.data.fragments, function (key, value) {
+        //                 $(key).replaceWith(value);
+        //             });
+        //         } else {
+        //             console.warn("Ошибка обновления корзины:", response.data.message);
+        //         }
+        //     },
+        //     error: function (xhr) {
+        //         console.error("Ошибка AJAX:", xhr.responseText);
+        //     },
+        // });
     });
 });

@@ -29,9 +29,9 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
 
 ?>
 
-<div class="flex gap-10 mt-16">
-    <div class="w-1/2">
-        <form name="checkout" method="post" class="checkout woocommerce-checkout" action="<?php echo esc_url( wc_get_checkout_url() ); ?>" enctype="multipart/form-data" aria-label="<?php echo esc_attr__( 'Checkout', 'woocommerce' ); ?>">
+<div class="flex flex-col sm:flex-row gap-10 mt-5 xs:mt-16">
+    <div class="sm:w-1/2">
+        <form name="checkout" method="post" class="checkout woocommerce-checkout lg:pr-20" action="<?php echo esc_url( wc_get_checkout_url() ); ?>" enctype="multipart/form-data" aria-label="<?php echo esc_attr__( 'Checkout', 'woocommerce' ); ?>">
 
             <?php if ( $checkout->get_checkout_fields() ) : ?>
 
@@ -64,8 +64,8 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
 
         </form>
     </div>
-    <div class="w-1/2">
-        <div class="border-b border-black pb-2">крым, г.симферополь, ул.одесская 2</div>
+    <div class="sm:w-1/2">
+        <div class="border-b border-black pb-2 xs:pt-3.5">крым, г.симферополь, ул.одесская 2</div>
         <div class="map h-60 md:h-80 grayscale-[70%] mt-4 bg-white-20 border border-black mb-6" id="map-office"></div>
     </div>
 </div>
