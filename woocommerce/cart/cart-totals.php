@@ -27,7 +27,7 @@ function get_cart_count_text() {
         $word = 'товара';
     }
 
-    return $count . ' ' . $word;
+    return  $word;
 }
 ?>
 <div class="cart_totals <?php echo ( WC()->customer->has_calculated_shipping() ) ? 'calculated_shipping' : ''; ?>">
@@ -36,7 +36,7 @@ function get_cart_count_text() {
     <div>
         <div class="flex justify-between font-sans font-medium">
             <div class="md:w-1/3">
-                <?php echo get_cart_count_text(); ?>
+                <span id="cart-count-cart"><?= WC()->cart->get_cart_contents_count(); ?> </span> <?= get_cart_count_text(); ?>
             </div>
             <div class="md:w-2/3">
                 <?php do_action( 'woocommerce_cart_totals_before_order_total' ); ?>

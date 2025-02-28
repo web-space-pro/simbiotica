@@ -1,98 +1,83 @@
-// jQuery(function ($) {
-//     function updateCart($input) {
-//         let newQty = parseInt($input.val()) || 0;
-//         let cartKey = $input.attr("name").match(/\[(.*?)\]/)[1];
-//
-//         let data = {
-//             action: "update_cart_ajax",
-//             cart_item_key: cartKey,
-//             quantity: newQty,
-//         };
-//
-//         $.ajax({
-//             type: "POST",
-//             url: wc_cart_params.ajax_url,
-//             data: data,
-//             beforeSend: function () {
-//                 $(".woocommerce-cart-form").addClass("loading");
-//             },
-//             success: function (response) {
-//                 console.log("AJAX Response:", response); // Проверяем ответ
-//
-//                 if (response.fragments) {
-//                     $.each(response.fragments, function (key, value) {
-//                         $(key).replaceWith(value);
-//                     });
-//                     // console.log("Fragments:", response.fragments);
-//                 } else {
-//                     console.warn("Фрагменты корзины не обновились. Принудительное обновление.");
-//                    // location.reload(); // Если фрагментов нет, перезагружаем страницу
-//                 }
-//             },
-//             complete: function () {
-//                 $(".woocommerce-cart-form").removeClass("loading");
-//             },
-//             error: function (xhr, status, error) {
-//                 console.error("Ошибка AJAX:", error);
-//             },
-//         });
-//     }
-//
-//     $(".woocommerce-cart-form").on("click", ".qty-plus", function () {
-//         let $input = $(this).closest(".quantity-wrapper").find(".qty");
-//         let currentVal = parseInt($input.val()) || 0;
-//         let maxVal = parseInt($input.attr("max")) || 1000;
-//
-//         if (currentVal < maxVal) {
-//             $input.val(currentVal + 1).trigger("change");
-//         }
-//     });
-//
-//     $(".woocommerce-cart-form").on("click", ".qty-minus", function () {
-//         let $input = $(this).closest(".quantity-wrapper").find(".qty");
-//         let currentVal = parseInt($input.val()) || 1;
-//         let minVal = parseInt($input.attr("min")) || 1;
-//
-//         if (currentVal > minVal) {
-//             $input.val(currentVal - 1).trigger("change");
-//         }
-//     });
-//
-//     $(".woocommerce-cart-form").on("change", ".qty", function () {
-//         updateCart($(this));
-//     });
-// });
+document.addEventListener("DOMContentLoaded", function () {
+    let updateTimeout;
+    let abortController = new AbortController();
 
-jQuery(document).ready(function ($) {
-    $(".qty-plus, .qty-minus").on("click", function () {
-        let $input = $(this).closest(".quantity-wrapper").find(".qty");
-        let newVal = parseInt($input.val()) + ($(this).hasClass("qty-plus") ? 1 : -1);
-        if (newVal < 1) newVal = 1; // Минимальное значение = 1
+    document.body.addEventListener("click", function (event) {
+        let button = event.target.closest(".qty-minus, .qty-plus");
+        if (!button) return;
 
-        $input.val(newVal);
+        let wrapper = button.closest(".quantity-wrapper");
+        let input = wrapper.querySelector(".qty");
+        let currentValue = parseInt(input.value);
+        let min = parseInt(input.getAttribute("min")) || 1;
+        let max = parseInt(input.getAttribute("max")) || 100;
+        let newValue = currentValue;
 
-        let cartItemKey = $input.attr("name").match(/\[([a-zA-Z0-9]+)\]\[qty\]/)[1];
+        if (button.classList.contains("qty-plus") && currentValue < max) {
+            newValue++;
+        } else if (button.classList.contains("qty-minus") && currentValue > min) {
+            newValue--;
+        }
 
-        // $.ajax({
-        //     type: "POST",
-        //     url: wc_cart_params.ajax_url,
-        //     data: {
-        //         action: "update_cart_shop",
-        //         hash: cartItemKey,
-        //         quantity: newVal,
-        //     },
-        //     success: function (response) {
-        //         if (response.success && response.data.fragments) {
-        //             $.each(response.data.fragments, function (key, value) {
-        //                 $(key).replaceWith(value);
-        //             });
-        //         } else {
-        //             console.warn("Ошибка обновления корзины:", response.data.message);
-        //         }
-        //     },
-        //     error: function (xhr) {
-        //         console.error("Ошибка AJAX:", xhr.responseText);
-        //     },
-        // });
+        input.value = newValue;
+
+        // Отменяем предыдущий AJAX-запрос перед отправкой нового
+        abortController.abort();
+        abortController = new AbortController();
+
+        clearTimeout(updateTimeout);
+        updateTimeout = setTimeout(() => updateCart(input, newValue, abortController.signal), 300);
     });
+
+    async function updateCart(input, quantity, signal) {
+        let inputName = input.getAttribute("name");
+        let match = inputName.match(/cart\[([a-f0-9]+)\]\[qty\]/);
+        if (!match || !match[1]) {
+            console.error("Не удалось получить hash товара:", inputName);
+            return;
+        }
+
+        let itemHash = match[1];
+
+        try {
+            let response = await fetch("/wp-admin/admin-ajax.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: new URLSearchParams({
+                    action: "update_cart_ajax",
+                    hash: itemHash,
+                    quantity: quantity
+                }),
+                signal
+            });
+
+            let data = await response.json();
+
+            if (data.success) {
+                const cartTable = document.querySelector(".shop_table.cart");
+                if (cartTable) {
+                    cartTable.innerHTML = new DOMParser()
+                        .parseFromString(data.data.cart_html, "text/html")
+                        .querySelector(".shop_table.cart").innerHTML;
+                }
+
+                // Обновляем счётчик корзины, если сервер вернул его в ответе
+                if (data.data.cart_count !== undefined) {
+                    updateCartCount(data.data.cart_count);
+                }
+
+                $('button[name="update_cart"]').click();
+            } else {
+                console.error("Ошибка обновления корзины:", data.message);
+            }
+        } catch (error) {
+            if (error.name !== "AbortError") {
+                console.error("Ошибка запроса:", error);
+            }
+        }
+    }
+
+    function updateCartCount(count) {
+        document.getElementById("cart-count").textContent = count;
+    }
 });

@@ -4,9 +4,6 @@
    @apply hidden;
   }
  }
- .wc-block-components-product-metadata{
-  //@apply hidden;
- }
  .quantity .qty {
   width: auto;
   text-align: center;
@@ -22,4 +19,14 @@
   @apply float-none w-full xs:w-5/6 lg:w-1/2;
   margin: 0 0 0 auto;
  }
+}
+.woocommerce-cart-form.processing,
+.cart_totals.processing{
+ opacity: 1 !important;
+}
+.woocommerce-cart-form .blockUI,
+.woocommerce-cart-form .blockOverlay,
+.cart_totals .blockUI,
+.cart_totals .blockOverlay{
+ display: none !important;
 }

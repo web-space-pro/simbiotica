@@ -72,6 +72,10 @@ input[type="number"] {
 
 .qty-minus,
 .qty-plus {
+ user-select: none;
+ -webkit-user-select: none;
+ -moz-user-select: none;
+ -ms-user-select: none;
  background: transparent;
  border: 1px solid black!important;
  border: none;

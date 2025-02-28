@@ -572,9 +572,6 @@ video {
 .mt-2{
   margin-top: 0.5rem;
 }
-.mt-20{
-  margin-top: 5rem;
-}
 .mt-3{
   margin-top: 0.75rem;
 }
@@ -592,9 +589,6 @@ video {
 }
 .mt-8{
   margin-top: 2rem;
-}
-.mt-0{
-  margin-top: 0px;
 }
 .block{
   display: block;
@@ -646,9 +640,6 @@ video {
 }
 .min-h-svh{
   min-height: 100svh;
-}
-.w-1\/2{
-  width: 50%;
 }
 .w-24{
   width: 6rem;
@@ -942,9 +933,6 @@ video {
 }
 .pr-8{
   padding-right: 2rem;
-}
-.pt-3\.5{
-  padding-top: 0.875rem;
 }
 .pt-4{
   padding-top: 1rem;
@@ -1544,6 +1532,10 @@ input[type=number] {
 
 .qty-minus,
 .qty-plus {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
   background: transparent;
   border: 1px solid black !important;
   border: none;
@@ -1598,6 +1590,18 @@ input[type=number] {
 }
 .woocommerce-cart .cart-collaterals .cart_totals {
   margin: 0 0 0 auto;
+}
+
+.woocommerce-cart-form.processing,
+.cart_totals.processing {
+  opacity: 1 !important;
+}
+
+.woocommerce-cart-form .blockUI,
+.woocommerce-cart-form .blockOverlay,
+.cart_totals .blockUI,
+.cart_totals .blockOverlay {
+  display: none !important;
 }
 
 .woocommerce-additional-fields {
@@ -2095,11 +2099,11 @@ a.link:hover{
   .xs\:w-8{
     width: 2rem;
   }
-  .xs\:w-full{
-    width: 100%;
-  }
   .xs\:w-auto{
     width: auto;
+  }
+  .xs\:w-full{
+    width: 100%;
   }
   .xs\:max-w-\[25\%\]{
     max-width: 25%;
@@ -2196,6 +2200,9 @@ a.link:hover{
   .sm\:hidden{
     display: none;
   }
+  .sm\:w-1\/2{
+    width: 50%;
+  }
   .sm\:w-2\/3{
     width: 66.666667%;
   }
@@ -2219,9 +2226,6 @@ a.link:hover{
   }
   .sm\:w-auto{
     width: auto;
-  }
-  .sm\:w-1\/2{
-    width: 50%;
   }
   .sm\:max-w-72{
     max-width: 18rem;
@@ -2339,9 +2343,6 @@ a.link:hover{
   }
   .md\:w-full{
     width: 100%;
-  }
-  .md\:w-1\/2{
-    width: 50%;
   }
   .md\:basis-1\/2{
     flex-basis: 50%;
