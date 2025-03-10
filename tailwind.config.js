@@ -26,6 +26,7 @@ module.exports = {
 
       'woocommerce/archive-product.php',
       'woocommerce/content-product.php',
+      'woocommerce/content-single-product.php',
       'woocommerce/loop/price.php',
       'woocommerce/loop/loop-start.php',
       'woocommerce/loop/loop-end.php',
@@ -88,7 +89,11 @@ module.exports = {
       backgroundImage: {
         'bg-gradient': "linear-gradient(180deg, #1a1f1b 0%, #001202 100%);",
         'bg-link': 'linear-gradient(90deg, #0ecccf 0%, #086b6d 100%)',
-      }
+      },
+      aspectRatio: {
+        '4/3': '4 / 3',
+        '3/4': '3/ 4',
+      },
     },
   },
   plugins: [],

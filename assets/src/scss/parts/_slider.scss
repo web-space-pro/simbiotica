@@ -1,0 +1,18 @@
+.slider{
+  @apply w-full bg-[#F6F6F6] border border-gray-10 md:h-[65svh] xl:h-[75svh] overflow-hidden;
+  .slick-list, .slick-track, .slick-slide, .slick-slide div{
+    @apply h-full w-full ;
+  }
+  img{
+    @apply w-full h-full aspect-[3/4] object-cover object-center;
+  }
+  .slick-prev, .slick-next{
+    @apply absolute z-10 top-0 p-1.5 flex bg-white-10 border border-gray-10 cursor-pointer;
+  }
+  .slick-prev{
+    @apply right-9;
+  }
+  .slick-next{
+    @apply right-0;
+  }
+}

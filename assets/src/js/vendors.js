@@ -1,1 +1,1 @@
-import './plugins/jquery.maskedinput.min'
+import 'slick-carousel'

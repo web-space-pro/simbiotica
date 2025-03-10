@@ -79,6 +79,7 @@ if ( function_exists('add_theme_support') ) {
     add_image_size('large', 1000, '', true);
     add_image_size('large2', 1400, '', true);
     add_image_size('large3', 1920, '', true);
+    add_image_size('post', 768, 1024, true);
 }
 
 // Remove Wordpress emoji
