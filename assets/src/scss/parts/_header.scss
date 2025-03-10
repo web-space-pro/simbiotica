@@ -6,7 +6,13 @@
 }
 .mobile-menu{
   @apply justify-end;
-  .menu-item{
+   .menu-item{
     @apply mr-0 ml-10 mb-0 text-xl leading-none;
+  }
+}
+
+.menu-footer{
+  .menu-item{
+    @apply xs:mr-7 xs:mb-0;
   }
 }

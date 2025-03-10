@@ -36,7 +36,7 @@ function simbiotica_display_product_attributes() {
         echo '<tbody>';
 
         foreach ($attributes as $attribute) {
-            echo '<tr class="mb-2">';
+            echo '<tr class="mb-2 align-top">';
 
             // Название атрибута
             echo '<td class="font-medium text-black">' . wc_attribute_label($attribute->get_name()) . '</td>';
@@ -44,9 +44,9 @@ function simbiotica_display_product_attributes() {
             // Значения атрибута
             if ($attribute->is_taxonomy()) {
                 $terms = wc_get_product_terms($product->get_id(), $attribute->get_name(), array('fields' => 'names'));
-                echo '<td class="text-gray-10">' . implode(', ', $terms) . '</td>';
+                echo '<td class="text-gray-10 pl-4">' . implode(', ', $terms) . '</td>';
             } else {
-                echo '<td class="text-gray-10">' . implode(', ', $attribute->get_options()) . '</td>';
+                echo '<td class="text-gray-10 pl-4">' . implode(', ', $attribute->get_options()) . '</td>';
             }
 
             echo '</tr>';

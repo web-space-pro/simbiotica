@@ -5,8 +5,8 @@ if ( function_exists('get_field') ) {
     $p_content = $production['dannye'];
 
     $office  = get_sub_field('office');
-    $o_title = $production['title'];
-    $o_content = $production['dannye'];
+    $o_title = $office['title'];
+    $o_content = $office['dannye'];
 
 }
 ?>

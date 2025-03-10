@@ -4,12 +4,7 @@
 add_action('wp_ajax_simbiotica_get_cart_count', 'simbiotica_get_cart_count');
 add_action('wp_ajax_nopriv_simbiotica_get_cart_count', 'simbiotica_get_cart_count');
 
-add_action('before_woocommerce_init', function () {
-    if (class_exists('\Automattic\WooCommerce\Utilities\FeaturesUtil')) {
-        \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility('custom_cart_checkout_blocks', 'your-theme-folder', false);
-    }
-});
-add_filter('woocommerce_should_load_cart_checkout_blocks', '__return_false');
+
 
 function simbiotica_get_cart_count() {
     if (WC()->cart) {
@@ -25,12 +20,12 @@ function simbiotica_get_cart_count() {
 add_filter('woocommerce_get_item_data', function ($item_data, $cart_item) {
     return []; // Полностью убираем метаданные
 }, 10, 2);
-function enable_cart_fragments() {
-    if (is_cart()) {
-        wp_enqueue_script('wc-cart-fragments');
-    }
-}
-add_action('wp_enqueue_scripts', 'enable_cart_fragments');
+//function enable_cart_fragments() {
+//    if (is_cart()) {
+//        wp_enqueue_script('wc-cart-fragments');
+//    }
+//}
+//add_action('wp_enqueue_scripts', 'enable_cart_fragments');
 
 function update_cart_ajax() {
     if (!isset($_POST['hash']) || !isset($_POST['quantity'])) {

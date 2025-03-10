@@ -15,6 +15,7 @@ module.exports = {
       'single-services.php',
       'single.php',
       'content-parts/content.php',
+      'content-parts/content-page.php',
 
       'block-parts/tpl-hero.php',
       'block-parts/tpl-find-us.php',

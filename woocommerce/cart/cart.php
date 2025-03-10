@@ -43,7 +43,7 @@ do_action( 'woocommerce_before_cart' ); ?>
                 ?>
                 <div class="flex flex-row justify-between gap-4 woocommerce-cart-form__cart-item pb-5 pt-5 border-b border-black  <?php echo esc_attr( apply_filters( 'woocommerce_cart_item_class', 'cart_item', $cart_item, $cart_item_key ) ); ?>">
 
-                    <div class="basis-6/12 sm:basis-2/12 product-thumbnail overflow-hidden bg-white-20 border border-gray-10">
+                    <div class="basis-6/12 sm:basis-2/12 overflow-hidden bg-white-20 border border-gray-10">
                         <?php
                         $thumbnail = apply_filters( 'woocommerce_cart_item_thumbnail', $_product->get_image(), $cart_item, $cart_item_key );
 

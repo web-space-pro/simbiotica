@@ -170,11 +170,11 @@ a.link{
     margin-bottom: 0!important;
   }
 }
-.single-projects, .single-product{
+.single-projects, .single-product, .page{
   .post-thumbnail{
     @apply bg-[#F6F6F6] border border-gray-10 md:h-[65svh] xl:h-[75svh];
     img{
-      @apply w-full h-full object-cover object-bottom;
+      @apply w-full h-full object-cover object-center;
     }
   }
   h4.wp-block-heading{
@@ -200,18 +200,6 @@ a.link{
   @apply absolute bottom-0 left-0 w-full h-[4.6rem] pointer-events-none ;
 }
 
-//.custom-select-trigger {
-//  background-color: transparent;
-//  color: black;
-//  border: 1px solid black;
-//  padding: 8px 12px;
-//  font-size: 16px;
-//  display: flex;
-//  justify-content: space-between;
-//  align-items: center;
-//  position: relative;
-//}
-//
 .custom-select-trigger::after {
   content: "▼";
   font-size: 14px;
@@ -221,34 +209,6 @@ a.link{
   transform: translateY(-50%);
   pointer-events: none;
 }
-//
-//.custom-options {
-//  position: absolute;
-//  top: 100%;
-//  left: 0;
-//  width: 100%;
-//  background: white;
-//  border: 1px solid black;
-//  display: none;
-//  z-index: 10;
-//}
-//
-//.custom-options.active {
-//  display: block;
-//}
-//
-//.custom-option {
-//  padding: 8px 12px;
-//  background: yellow;
-//  color: black;
-//  font-size: 12px;
-//  cursor: pointer;
-//  transition: background 0.2s;
-//}
-//
-//.custom-option:hover {
-//  background: orange;
-//}
 
 .woocommerce-notices-wrapper {
   @apply opacity-0 invisible translate-y-[-20px] transition-all duration-500 ease-in-out h-0 max-w-[300px] absolute top-[20px] right-[20px] z-[50] text-[14px] leading-[1.25];
@@ -257,5 +217,29 @@ a.link{
 .woocommerce-cart-form{
   a{
     text-decoration: none;
+  }
+}
+
+body{
+  .cky-consent-container{
+    @apply font-sans pl-4 pb-4 w-[95%] md:w-9/12;
+    .cky-consent-bar{
+      @apply px-3.5 py-2.5;
+    }
+    .cky-title{
+      @apply hidden;
+    }
+    .cky-notice-des{
+      @apply p-0;
+    }
+    .cky-notice-btn-wrapper{
+      @apply p-0 md:px-6;
+    }
+    .cky-notice{
+      @apply px-0 md:px-10;
+      p{
+        @apply text-sm md:text-base;
+      }
+    }
   }
 }

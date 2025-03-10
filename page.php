@@ -32,7 +32,7 @@ get_header();
             else:
                 ?>
                 <section>
-                    <?php get_template_part( 'content-parts/content', get_post_type('page') ); ?>
+                    <?php get_template_part( 'content-parts/content', get_post_type('') ); ?>
                 </section>
             <?php
             endif;
