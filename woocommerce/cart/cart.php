@@ -43,7 +43,7 @@ do_action( 'woocommerce_before_cart' ); ?>
                 ?>
                 <div class="flex flex-row justify-between gap-4 woocommerce-cart-form__cart-item pb-5 pt-5 border-b border-black  <?php echo esc_attr( apply_filters( 'woocommerce_cart_item_class', 'cart_item', $cart_item, $cart_item_key ) ); ?>">
 
-                    <div class="basis-6/12 sm:basis-2/12 overflow-hidden bg-white-20 border border-gray-10">
+                    <div class="w-6/12 sm:w-2/12 overflow-hidden bg-white-20 border border-gray-10">
                         <?php
                         $thumbnail = apply_filters( 'woocommerce_cart_item_thumbnail', $_product->get_image(), $cart_item, $cart_item_key );
 
@@ -54,8 +54,8 @@ do_action( 'woocommerce_before_cart' ); ?>
                         }
                         ?>
                     </div>
-                    <div class="basis-5/12 flex flex-col justify-between sm:hidden">
-                        <div class="product-name text-xs md:text-base lg:text-xl xl:text-2xl sm:w-2/3 leading-tight font-reg font-medium text-black" data-title="<?php esc_attr_e( 'Product', 'woocommerce' ); ?>">
+                    <div class="w-5/12 flex flex-col justify-between sm:hidden">
+                        <div class="product-name text-xs md:text-base lg:text-xl xl:text-2xl sm:w-2/3 leading-tight font-sans font-medium text-black" data-title="<?php esc_attr_e( 'Product', 'woocommerce' ); ?>">
                             <?php
                             if ( ! $product_permalink ) {
                                 echo wp_kses_post( $product_name . '&nbsp;' );
@@ -79,7 +79,8 @@ do_action( 'woocommerce_before_cart' ); ?>
                             }
                             ?>
                         </div>
-                        <div class="product-price mt-2 text-xs md:text-base lg:text-xl xl:text-2xl font-sans leading-tight font-normal text-black" data-title="<?php esc_attr_e( 'Price', 'woocommerce' ); ?>">
+                        <div class="product-price mt-2 text-xs md:text-base lg:text-xl xl:text-2xl font-sans leading-tight font-normal text-black" data-title="<?php esc_attr_e( 'Price', 'woocommerce' ); ?>"
+
                             <?php
                             echo apply_filters( 'woocommerce_cart_item_price', WC()->cart->get_product_price( $_product ), $cart_item, $cart_item_key ); // PHPCS: XSS ok.
                             ?>
@@ -130,9 +131,9 @@ do_action( 'woocommerce_before_cart' ); ?>
                             </div>
                         </div>
                     </div>
-                    <div class="hidden sm:block sm:basis-4/12">
+                    <div class="sm:w-4/12 hidden sm:block ">
                         <div class="flex flex-col h-full justify-between">
-                            <div class="product-name text-xs md:text-base lg:text-xl xl:text-2xl sm:w-2/3 leading-tight font-reg font-medium text-black" data-title="<?php esc_attr_e( 'Product', 'woocommerce' ); ?>">
+                            <div class="product-name text-xs md:text-base lg:text-xl xl:text-2xl sm:w-2/3 leading-tight font-sans font-medium text-black" data-title="<?php esc_attr_e( 'Product', 'woocommerce' ); ?>">
                                 <?php
                                 if ( ! $product_permalink ) {
                                     echo wp_kses_post( $product_name . '&nbsp;' );
@@ -157,13 +158,36 @@ do_action( 'woocommerce_before_cart' ); ?>
                                 ?>
                             </div>
                             <div class="product-price text-xs md:text-base lg:text-xl xl:text-2xl font-sans leading-tight font-normal text-black" data-title="<?php esc_attr_e( 'Price', 'woocommerce' ); ?>">
-                                <?php
-                                echo apply_filters( 'woocommerce_cart_item_price', WC()->cart->get_product_price( $_product ), $cart_item, $cart_item_key ); // PHPCS: XSS ok.
-                                ?>
+                               <?php if ( isset( $cart_item['wapf'] ) && !empty( $cart_item['wapf'] ) ):?>
+                                <div class="mb-1">
+                                    <span class="text-sm text-gray-20">Выбранные опции:</span>
+                                    <ul class="text-sm leading-none">
+                                        <?php
+                                        foreach ( $cart_item['wapf'] as $field_id => $field_data ) {
+                                            if (is_array($field_data)) {
+                                                $field_value = isset($field_data['value']) ? $field_data['value'] : $field_data;
+
+                                                if (is_array($field_value)) {
+                                                    $field_value = implode(', ', $field_value);
+                                                }
+                                            } else {
+                                                $field_value = $field_data;
+                                            }
+
+                                            // Выводим только если есть данные
+                                            if (!empty($field_value)) {
+                                                echo '<li>' . esc_html( $field_value ) . '</li>';
+                                            }
+                                        }
+                                        ?>
+                                    </ul>
+                                </div>
+                               <?php endif; ?>
+                                <?php echo apply_filters( 'woocommerce_cart_item_price', WC()->cart->get_product_price( $_product ), $cart_item, $cart_item_key ); // PHPCS: XSS ok.?>
                             </div>
                         </div>
                     </div>
-                    <div class="hidden sm:block sm:basis-2/12 product-quantity" data-title="<?php esc_attr_e( 'Quantity', 'woocommerce' ); ?>">
+                    <div class="sm:w-2/12 hidden sm:block  product-quantity" data-title="<?php esc_attr_e( 'Quantity', 'woocommerce' ); ?>">
                         <div class="quantity-wrapper flex relative">
                                 <span class="qty-minus cursor-pointer">
                                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -203,12 +227,12 @@ do_action( 'woocommerce_before_cart' ); ?>
                                 </span>
                         </div>
                     </div>
-                    <div class="hidden sm:block sm:basis-3/12 product-subtotal" data-title="<?php esc_attr_e( 'Subtotal', 'woocommerce' ); ?>">
+                    <div class="sm:w-3/12 hidden sm:block  product-subtotal" data-title="<?php esc_attr_e( 'Subtotal', 'woocommerce' ); ?>">
                         <div class="text-xs md:text-base lg:text-xl xl:text-2xl font-sans leading-tight font-normal text-black">
                             <?php echo apply_filters( 'woocommerce_cart_item_subtotal', WC()->cart->get_product_subtotal( $_product, $cart_item['quantity'] ), $cart_item, $cart_item_key ); // PHPCS: XSS ok.?>
                         </div>
                     </div>
-                    <div class="basis-1/12 product-remove text-right">
+                    <div class="w-1/12 product-remove text-right">
                         <a href="<?php echo esc_url(wc_get_cart_remove_url($cart_item_key)); ?>" data-product_id="<?=$product_id?>" class="inline-block">
                             <svg class="hover:opacity-70" width="24" height="24" viewBox="0 0 24 24" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M6.19526 6.19526C6.45561 5.93491 6.87772 5.93491 7.13807 6.19526L12 11.0572L16.8619 6.19526C17.1223 5.93491 17.5444 5.93491 17.8047 6.19526C18.0651 6.45561 18.0651 6.87772 17.8047 7.13807L12.9428 12L17.8047 16.8619C18.0651 17.1223 18.0651 17.5444 17.8047 17.8047C17.5444 18.0651 17.1223 18.0651 16.8619 17.8047L12 12.9428L7.13807 17.8047C6.87772 18.0651 6.45561 18.0651 6.19526 17.8047C5.93491 17.5444 5.93491 17.1223 6.19526 16.8619L11.0572 12L6.19526 7.13807C5.93491 6.87772 5.93491 6.45561 6.19526 6.19526Z" fill="black" /></svg>
                         </a>

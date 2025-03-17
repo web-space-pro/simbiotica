@@ -90,3 +90,14 @@ input[type="number"] {
   margin: 0 auto;
  }
 }
+
+.woocommerce-info{
+ border: none;
+ background: transparent;
+ color: #3f4042;
+ padding-left: 0;
+ padding-right: 0;
+ &:before{
+  content: none;
+ }
+}

@@ -23,7 +23,7 @@ if ( function_exists('get_field') ) {
                 <?php if(!empty($p_content)) : ?>
                     <?php foreach($p_content as $value) : ?>
                         <div class="font-sans mb-2">
-                            <h3 class="text-base font-reg text-gray-20 lowercase mb-1"><?=$value['label']?></h3>
+                            <h3 class="text-base font-sans text-gray-20 lowercase mb-1"><?=$value['label']?></h3>
                             <?=$value['text']?>
                         </div>
                     <?php endforeach; ?>
@@ -40,7 +40,7 @@ if ( function_exists('get_field') ) {
                 <?php if(!empty($o_content)) : ?>
                     <?php foreach($o_content as $value) : ?>
                         <div class="font-sans mb-2">
-                            <h3 class="text-base font-reg text-gray-20 lowercase mb-1"><?=$value['label']?></h3>
+                            <h3 class="text-base font-sans text-gray-20 lowercase mb-1"><?=$value['label']?></h3>
                             <?=$value['text']?>
                         </div>
                     <?php endforeach; ?>

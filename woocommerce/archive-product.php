@@ -20,141 +20,102 @@ defined( 'ABSPATH' ) || exit;
 get_header( 'shop' );
 
 
+// Получаем список категорий товаров
 $categories = get_terms([
-    'taxonomy' => 'product_cat',
+    'taxonomy'   => 'product_cat',
     'hide_empty' => false,
-    'exclude' => [15],
-    'orderby' => 'date',
-    'order' => 'DESC',
+    'exclude'    => [15],
+    'orderby'    => 'date',
+    'order'      => 'DESC',
 ]);
-// Получаем первый ID категории
-$first_categoryID = !empty($categories) && is_array($categories) ? $categories[0]->term_id : '';
+
+// Определяем активную категорию (если не выбрана - берём первую)
+$first_categoryID    = !empty($categories) && is_array($categories) ? $categories[0]->term_id : '';
 $current_category_id = is_tax('product_cat') ? get_queried_object_id() : $first_categoryID;
+
+// Создаём кастомный запрос для вывода товаров только из выбранной категории
+$args = [
+    'post_type'      => 'product',
+    'posts_per_page' => -1,
+    'tax_query'      => [
+        [
+            'taxonomy' => 'product_cat',
+            'field'    => 'term_id',
+            'terms'    => $first_categoryID,
+        ]
+    ]
+];
+
+// Подменяем глобальный запрос WooCommerce
+$query = new WP_Query($args);
 ?>
 <div class="min-h-svh flex-grow-1 flex flex-col px-4 sm:px-[2.8vmax] pt-6 pb-6">
     <?php
-
-    /**
-     * Hook: woocommerce_before_main_content.
-     *
-     * @hooked woocommerce_output_content_wrapper - 10 (outputs opening divs for the content)
-     * @hooked woocommerce_breadcrumb - 20
-     * @hooked WC_Structured_Data::generate_website_data() - 30
-     */
     do_action( 'woocommerce_before_main_content' );
-
-
-    /**
-     * Hook: woocommerce_shop_loop_header.
-     *
-     * @since 8.6.0
-     *
-     * @hooked woocommerce_product_taxonomy_archive_header - 10
-     */
     do_action('woocommerce_shop_loop_header');
-
     ?>
+
     <section class="filter-product">
         <div class="pb-6 sm:pb-8 flex gap-2 sm:gap-4 lowercase items-center overflow-x-auto scrollbar-none">
             <?php foreach ($categories as $key => $item) :
                 $is_active = ($current_category_id == $item->term_id) ? 'active' : '';
-            ?>
-                <button type="button" data-id="<?= $item->term_id ?>" data-name="<?= $item->slug ?>"
-                        class="<?=$is_active?> w-fit lowercase outline-none hover:border-gray-10 border-gray-10/0 border px-2 py-1 shrink-0 border-black">
-                    <?= $item->name ?>
+                ?>
+                <button type="button" data-id="<?= esc_attr($item->term_id) ?>" data-name="<?= esc_attr($item->slug) ?>"
+                        class="<?= $is_active ?> w-fit lowercase outline-none hover:border-gray-10 border-gray-10/0 border px-2 py-1 shrink-0 border-black">
+                    <?= esc_html($item->name) ?>
                 </button>
             <?php endforeach; ?>
         </div>
     </section>
+
+
     <section class="mb-7 sm:mb-10">
-        <?php
-        if ( woocommerce_product_loop() ) {
-
-            /**
-             * Hook: woocommerce_before_shop_loop.
-             *
-             * @hooked woocommerce_output_all_notices - 10
-             * @hooked woocommerce_result_count - 20
-             * @hooked woocommerce_catalog_ordering - 30
-             */
-            do_action( 'woocommerce_before_shop_loop' );
-
-            woocommerce_product_loop_start();
-
-            if ( wc_get_loop_prop( 'total' ) ) {
-                while ( have_posts() ) {
-                    the_post();
-
-                    /**
-                     * Hook: woocommerce_shop_loop.
-                     */
-                    do_action( 'woocommerce_shop_loop' );
-
-                    wc_get_template_part( 'content', 'product' );
-                }
-            }
-
-            woocommerce_product_loop_end();
-
-            /**
-             * Hook: woocommerce_after_shop_loop.
-             *
-             * @hooked woocommerce_pagination - 10
-             */
-            do_action( 'woocommerce_after_shop_loop' );
-        } else {
-            /**
-             * Hook: woocommerce_no_products_found.
-             *
-             * @hooked wc_no_products_found - 10
-             */
-            do_action( 'woocommerce_no_products_found' );
-        }
-        ?>
+        <ul id="products-list" class="grid grid-cols-2 lg:grid-cols-3 gap-4">
+            <?php if ($query->have_posts()) : ?>
+                <?php while ($query->have_posts()) : $query->the_post(); ?>
+                    <?php wc_get_template_part('content', 'product'); ?>
+                <?php endwhile; ?>
+            <?php else : ?>
+                <p class="text-center text-gray-500 col-span-2 lg:col-span-3">Товары не найдены</p>
+            <?php endif; ?>
+        </ul>
     </section>
 
     <?php
-    /**
-     * Hook: woocommerce_after_main_content.
-     *
-     * @hooked woocommerce_output_content_wrapper_end - 10 (outputs closing divs for the content)
-     */
     do_action( 'woocommerce_after_main_content' );
-
-    /**
-     * Hook: woocommerce_sidebar.
-     *
-     * @hooked woocommerce_get_sidebar - 10
-     */
     do_action('woocommerce_sidebar');
-
     ?>
 
-    <section class="related-products mt-7 sm:mt-10 mb-8 sm:mb-16">
+
+    <section class="hidden related-products mt-7 sm:mt-10 mb-8 sm:mb-16">
         <div class="text-2xl sm:text-[1.75rem] mb-5 sm:mb-10 font-medium leading-tight">
             <h2>Возможно вас может еще заинтересовать</h2>
         </div>
         <div class="grid gap-y-4 gap-x-[1.2vmax] sm:gap-y-[1.2vmax] grid-cols-2 lg:grid-cols-3">
-        <?php
-            $args = array(
+            <?php
+            $args_related = [
                 'post_type'      => 'product',
                 'posts_per_page' => 9,
                 'orderby'        => 'rand',
-            );
-            $loop = new WP_Query($args);
+            ];
+            $loop_related = new WP_Query($args_related);
 
-            if ($loop->have_posts()) :
-                while ($loop->have_posts()) : $loop->the_post();
+            if ($loop_related->have_posts()) :
+                while ($loop_related->have_posts()) :
+                    $loop_related->the_post();
                     wc_get_template_part('content', 'product');
                 endwhile;
                 wp_reset_postdata();
             endif;
-        ?>
+            ?>
         </div>
     </section>
 </div>
-<?php get_footer( '' ); ?>
 
+<?php
+wp_reset_postdata();
+get_footer();
+?>
 
 
 

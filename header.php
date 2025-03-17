@@ -18,7 +18,7 @@
     <?php wp_head(); ?>
 </head>
 
-<body <?php body_class('flex flex-col min-h-screen antialiased font-reg font-normal bg-white-10 leading-normal text-sm xs:text-base text-black selection:bg-black selection:text-white-10'); ?> data-page-id="<?php the_ID(); ?>">
+<body <?php body_class('flex flex-col min-h-screen antialiased font-sans font-normal bg-white-10 leading-normal text-sm xs:text-base text-black selection:bg-black selection:text-white-10'); ?> data-page-id="<?php the_ID(); ?>">
 <?php wp_body_open(); ?>
 
     <?php if (!is_front_page()): ?>
@@ -45,7 +45,7 @@
                         <div class="flex gap-4 pr-8 md:pr-[15vmax]">
                             <a href="<?php echo wc_get_cart_url(); ?>" target="_self">
                                 <div class="text-black flex relative items-center justify-center gap-0">
-                                    <div class="select-none xs:text-2xl font-medium leading-none" id="cart-count">
+                                    <div class="select-none xs:text-xl font-medium leading-none" id="cart-count">
                                         <?php echo WC()->cart->get_cart_contents_count(); ?>
                                     </div>
                                     <svg class="w-6 h-6 xs:w-8 xs:h-8" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">

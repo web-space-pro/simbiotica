@@ -106,3 +106,9 @@ function simbiotica_filter_products_by_category() {
 
 
 
+
+
+
+
+
+

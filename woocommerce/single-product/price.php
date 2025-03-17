@@ -24,7 +24,7 @@ global $product;
 $gallery_images = $product->get_gallery_image_ids();
 
 ?>
-<div class="mt-5 md:mt-0 mb-4 md:mb-0 flex justify-between items-center">
+<div class="flex justify-between items-center">
     <p class="font-sans text-xl md:text-2xl text-black mb-5 mt-5"><?php echo $product->get_price_html(); ?></p>
     <div class="block md:hidden add_to_cart_mobile">
         <?php woocommerce_template_single_add_to_cart(); ?>

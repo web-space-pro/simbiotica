@@ -7,7 +7,7 @@ remove_action('woocommerce_before_single_product_summary', 'woocommerce_show_pro
 remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_meta', 40);
 
 //Вывод Комплектации перед характеристиками ( ACF )
-add_action('woocommerce_single_product_summary', 'simbiotica_display_product_equipment', 24);
+//add_action('woocommerce_single_product_summary', 'simbiotica_display_product_equipment', 24);
 
 // Вывод Атрибутов  перед описанием
 add_action('woocommerce_single_product_summary', 'simbiotica_display_product_attributes', 25);
@@ -81,4 +81,23 @@ function simbiotica_display_product_equipment() {
         echo '</div>';
     }
 }
+
+function custom_wapf_translations($translated_text, $text, $domain) {
+    if ($domain === 'advanced-product-fields-for-woocommerce') {
+        switch ($text) {
+            case 'Choose an option':
+                return 'Выберите вариант';
+            case 'Product total':
+                return 'Стоимость товара';
+            case 'Options total':
+                return 'Дополнительные опции';
+            case 'Grand total':
+                return 'Общая стоимость';
+        }
+    }
+    return $translated_text;
+}
+add_filter('gettext', 'custom_wapf_translations', 10, 3);
+
+
 

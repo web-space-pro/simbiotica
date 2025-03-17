@@ -53,7 +53,7 @@ if ( ! wp_doing_ajax() ) {
 
         <div class="flex flex-col-reverse xs:flex-row gap-4 md:flex-row justify-between items-center mt-4 lg:mt-20">
             <div class="w-full xs:w-auto">
-                <button type="submit" class="cursor-pointer text-center px-6 py-2 border border-black bg-black text-white-10 block sm:inline-block  text-base font-medium font-reg lowercase transition ease-in-out duration-500 hover:bg-transparent hover:text-black" name="woocommerce_checkout_place_order" id="place_order">
+                <button type="submit" class="cursor-pointer text-center px-6 py-2 border border-black bg-black text-white-10 block sm:inline-block  text-base font-medium font-sans lowercase transition ease-in-out duration-500 hover:bg-transparent hover:text-black" name="woocommerce_checkout_place_order" id="place_order">
                     Оформить заказ
                 </button>
             </div>

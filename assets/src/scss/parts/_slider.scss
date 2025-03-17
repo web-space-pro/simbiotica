@@ -7,12 +7,15 @@
     @apply w-full h-full aspect-[3/4] object-cover object-center;
   }
   .slick-prev, .slick-next{
-    @apply absolute z-10 top-0 p-1.5 flex bg-white-10 border border-gray-10 cursor-pointer;
+    @apply absolute z-10 top-4 p-1.5 flex bg-black border border-black cursor-pointer;
+    &:hover svg{
+      opacity: .7;
+    }
   }
   .slick-prev{
-    @apply right-9;
+    @apply right-6 sm:right-[3.2rem];
   }
   .slick-next{
-    @apply right-0;
+    @apply right-2 sm:right-4;
   }
 }

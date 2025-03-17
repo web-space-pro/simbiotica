@@ -16,7 +16,7 @@ if ( function_exists('get_field') ) {
 ?>
 
 <section class="mt-2 xl:mt-20 mb-4">
-    <div class="sm:max-w-[43rem]">
+    <div class="sm:max-w-[45rem]">
         <?php if(!empty($title)) : ?>
             <h1 class="text-[1.75rem] sm:text-[2rem] lg:text-[2.5rem] font-medium leading-tight">
                 <?=$title?>
@@ -32,7 +32,7 @@ if ( function_exists('get_field') ) {
             </div>
         <?php endif; ?>
     </div>
-    <div class="mt-10 sm:mt-16">
+    <div class="mt-10 sm:mt-10">
         <div class="flex flex-col sm:flex-row gap-10 justify-between xs:ml-[7vmax]">
             <?php if(!empty($contactForm)) : ?>
             <div class="w-full sm:w-4/6 lg:w-1/2 xl:w-2/6">
@@ -42,21 +42,21 @@ if ( function_exists('get_field') ) {
             <div class="w-full sm:w-2/6 md:w-1/3 lg:w-2/6 xl:w-2/6">
                 <?php if(!empty($phone)) : ?>
                     <div class="font-sans mb-6">
-                        <h3 class="font-reg text-gray-20 lowercase mb-1"><?=$phone['label']?></h3>
+                        <h3 class="font-sans text-gray-20 lowercase mb-1"><?=$phone['label']?></h3>
                         <a href="tel:<?=$phone['number']?>" target="_blank"><?=$phone['number']?></a>
                     </div>
                 <?php endif; ?>
 
                 <?php if(!empty($email)) : ?>
                     <div class="font-sans mb-6">
-                        <h3 class="font-reg text-gray-20 lowercase mb-1"><?=$email['label']?></h3>
+                        <h3 class="font-sans text-gray-20 lowercase mb-1"><?=$email['label']?></h3>
                         <a href="mailto:<?=$email['value']?>" target="_blank"><?=$email['value']?></a>
                     </div>
                 <?php endif; ?>
 
                 <?php if(!empty($messengers)) : ?>
                     <div class="font-sans">
-                        <h3 class="font-reg text-gray-20 lowercase mb-1">написать в мессенджеры</h3>
+                        <h3 class="font-sans text-gray-20 lowercase mb-1">написать в мессенджеры</h3>
                         <ul>
                             <?php foreach($messengers as $item): ?>
                                 <li class="inline-block mr-6"><a href="<?=$item['link']['url']?>" target="<?=$item['link']['target']?>"><?=$item['link']['title']?></a></li>

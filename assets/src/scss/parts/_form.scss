@@ -33,7 +33,7 @@
   button,
   input[type="button"],
   input[type="submit"] {
-    @apply w-full cursor-pointer px-5 py-2 border border-black bg-black text-white-10  inline-block  text-base font-medium font-reg lowercase transition ease-in-out duration-500;
+    @apply w-full cursor-pointer px-5 py-2 border border-black bg-black text-white-10  inline-block  text-base font-medium font-sans lowercase transition ease-in-out duration-500;
   }
 
   //button:active,
@@ -75,7 +75,7 @@
 form{
   @apply text-sm text-gray-20;
   label{
-    @apply mb-6 block;
+    @apply mb-1 block;
   }
   a{
     @apply underline underline-offset-2 hover:no-underline;
@@ -84,7 +84,7 @@ form{
     display: none;
   }
   .wpcf7-acceptance{
-    @apply mt-4 block;
+    @apply mt-4 block text-xs;
     .wpcf7-list-item{
       @apply ml-0;
     }

@@ -48,7 +48,7 @@ if ( $product->is_in_stock() ) : ?>
                 ?>
             </div>
 
-            <button type="submit" name="add-to-cart" value="<?php echo esc_attr( $product->get_id() ); ?>" class="single_add_to_cart_button alt<?php echo esc_attr( wc_wp_theme_get_element_class_name( 'button' ) ? ' ' . wc_wp_theme_get_element_class_name( 'button' ) : '' ); ?> cursor-pointer text-center px-6 py-2 border border-black bg-black text-white-10 block sm:inline-block  text-base font-medium font-reg lowercase transition ease-in-out duration-500 hover:bg-transparent hover:text-black"><?php echo esc_html( $product->single_add_to_cart_text() ); ?></button>
+            <button type="submit" name="add-to-cart" value="<?php echo esc_attr( $product->get_id() ); ?>" class="single_add_to_cart_button alt<?php echo esc_attr( wc_wp_theme_get_element_class_name( 'button' ) ? ' ' . wc_wp_theme_get_element_class_name( 'button' ) : '' ); ?> cursor-pointer text-center px-6 py-2 border border-black bg-black text-white-10 block sm:inline-block  text-base font-medium font-sans lowercase transition ease-in-out duration-500 hover:bg-transparent hover:text-black"><?php echo esc_html( $product->single_add_to_cart_text() ); ?></button>
 
             <?php do_action( 'woocommerce_after_add_to_cart_button' ); ?>
         </form>

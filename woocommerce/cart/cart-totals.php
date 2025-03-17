@@ -50,7 +50,7 @@ function get_cart_count_text() {
         </div>
         <div class="flex gap-2 xs:gap-4 mt-6 flex-col xs:flex-row justify-between md:justify-start">
             <div>
-                <a class="cursor-pointer text-center px-6 py-2 border border-black bg-black text-white-10 block sm:inline-block  text-base font-medium font-reg lowercase transition ease-in-out duration-500 hover:bg-transparent hover:text-black" href="<?php echo wc_get_checkout_url(); ?>" target="_self" > оформление заказа</a>
+                <a class="cursor-pointer text-center px-6 py-2 border border-black bg-black text-white-10 block sm:inline-block  text-base font-medium font-sans lowercase transition ease-in-out duration-500 hover:bg-transparent hover:text-black" href="<?php echo wc_get_checkout_url(); ?>" target="_self" > оформление заказа</a>
             </div>
             <div>
                 <a href="/" target="_blank" class="inline-block w-full text-center relative font-medium transition-all before:content-[''] before:duration-300 before:ease-out before:top-0 before:left-0 before:bottom-0 before:w-0 before:absolute before:h-full hover:before:w-full hover:before:bg-black">

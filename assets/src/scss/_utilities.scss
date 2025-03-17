@@ -137,7 +137,7 @@ button.active {
 }
 
 a.link{
-  @apply cursor-pointer text-center px-6 py-2 border border-black bg-black text-white-10 block sm:inline-block  text-base font-medium font-reg lowercase transition ease-in-out duration-500 hover:bg-transparent hover:text-black;
+  @apply cursor-pointer text-center px-6 py-2 border border-black bg-black text-white-10 block sm:inline-block  text-base font-medium font-sans lowercase transition ease-in-out duration-500 hover:bg-transparent hover:text-black;
 }
 .scrollbar-none{
   scrollbar-width: none;
@@ -200,7 +200,7 @@ a.link{
   @apply absolute bottom-0 left-0 w-full h-[4.6rem] pointer-events-none ;
 }
 
-.custom-select-trigger::after {
+.custom-select-trigger::after ,.custom-wapf-trigger::after {
   content: "▼";
   font-size: 14px;
   position: absolute;

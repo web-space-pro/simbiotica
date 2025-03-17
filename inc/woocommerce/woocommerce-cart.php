@@ -58,6 +58,9 @@ add_action('wp_ajax_update_cart_ajax', 'update_cart_ajax');
 add_action('wp_ajax_nopriv_update_cart_ajax', 'update_cart_ajax');
 
 
+add_filter('wc_empty_cart_message', function() {
+    return __('Ваша корзина пуста.', 'simbiotica');
+});
 
 
 
