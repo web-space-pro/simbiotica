@@ -92,7 +92,7 @@ function custom_wapf_translations($translated_text, $text, $domain) {
             case 'Options total':
                 return 'Дополнительные опции';
             case 'Grand total':
-                return 'Общая стоимость';
+                return 'Стоимость товара';
         }
     }
     return $translated_text;

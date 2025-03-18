@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Создаем триггер для кастомного селекта
         let trigger = document.createElement("div");
+
         trigger.className = "custom-wapf-trigger bg-transparent text-gray-20 border-b border-black py-2 text-base flex justify-between items-center cursor-pointer";
         trigger.innerText = select.options[select.selectedIndex]?.text || "Выберите опцию";
 
@@ -24,6 +25,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     trigger.innerText = this.innerText;
                     select.value = this.dataset.value;
                     optionsWrapper.classList.add("hidden");
+
+                    // Добавляем класс для изменения цвета селекта
+                    trigger.classList.add("selected");
 
                     // Тригерим изменение, чтобы WAPF пересчитал цену
                     let event = new Event("change", { bubbles: true });

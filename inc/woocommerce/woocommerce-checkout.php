@@ -31,7 +31,7 @@ function simbiotica_checkout_fields($fields) {
     unset($fields['billing']['billing_state']);         // Регион/Область
     unset($fields['billing']['billing_postcode']);      // Почтовый индекс
     unset($fields['billing']['billing_country']);       // Страна
-    unset($fields['billing']['billing_email']);         // Email
+//    unset($fields['billing']['billing_email']);         // Email
     unset($fields['billing']['billing_company']);       // Название компании
     unset($fields['billing']['billing_phone']);         //
 
@@ -46,12 +46,20 @@ function simbiotica_checkout_fields($fields) {
             'placeholder' => __('ФИО', 'woocommerce'),
             'priority' => 10,
         ),
+        'billing_email' => array(
+            'label'       => __('Email', 'woocommerce'),
+            'required'    => true,
+            'class'       => array('form-row-wide'),
+            'placeholder' => __('Email', 'woocommerce'),
+            'priority'    => 20,
+            'type'        => 'email',
+        ),
         'billing_phone' => array(
             'label'    => __('Телефон', 'woocommerce'),
             'required' => true,
             'class'    => array('form-row-wide'),
             'placeholder' => __('Телефон', 'woocommerce'),
-            'priority' => 20,
+            'priority' => 25,
         ),
         'order_comments' => array(
             'label'    => __('Комментарий к заказу', 'woocommerce'),
@@ -84,6 +92,30 @@ function simbiotica_available_payment_gateways($gateways) {
 function simbiotica_remove_order_details_review() {
     remove_action('woocommerce_checkout_order_review', 'woocommerce_order_review', 10);
 }
+
+add_filter( 'woocommerce_account_menu_items', function( $items ) {
+//    unset( $items['edit-address'] ); // Убирает "Платежные адреса"
+    unset( $items['downloads'] ); // Убирает "Загрузки"
+    return $items;
+} );
+
+add_action( 'woocommerce_checkout_process', function() {
+    if ( ! is_user_logged_in() ) {
+        $email = isset( $_POST['billing_email'] ) ? sanitize_email( $_POST['billing_email'] ) : '';
+
+        if ( email_exists( $email ) ) {
+            wc_add_notice( 'Этот email уже зарегистрирован. Пожалуйста, войдите в свою учетную запись.', 'error' );
+        } else {
+            $username = sanitize_user( current( explode( '@', $email ) ) ); // Создание логина из email
+            $password = wp_generate_password();
+            $user_id  = wp_create_user( $username, $password, $email );
+
+            if ( ! is_wp_error( $user_id ) ) {
+                wc_set_customer_auth_cookie( $user_id ); // Автоматический вход
+            }
+        }
+    }
+} );
 
 
 

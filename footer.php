@@ -40,7 +40,7 @@
 <?php endif; ?>
 
 <button id="scrollTopBtn"
-        class="fixed bottom-20 right-5 hidden bg-black text-white-10 p-2 w-10 rounded-lg shadow-lg hover:bg-gray-10 transition">
+        class="fixed z-[50] bottom-20 right-5 hidden bg-black text-white-10 p-2 w-10 rounded-lg shadow-lg hover:bg-gray-10 transition">
     &#8679;
 </button>
 

@@ -210,14 +210,8 @@ a.link{
   pointer-events: none;
 }
 
-.woocommerce-notices-wrapper {
-  @apply opacity-0 invisible translate-y-[-20px] transition-all duration-500 ease-in-out h-0 max-w-[300px] absolute top-[20px] right-[20px] z-[50] text-[14px] leading-[1.25];
-}
-
-.woocommerce-cart-form{
-  a{
-    text-decoration: none;
-  }
+.custom-wapf-trigger.selected{
+  @apply text-gray-10;
 }
 
 body{

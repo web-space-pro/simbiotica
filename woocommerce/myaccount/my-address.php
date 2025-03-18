@@ -19,24 +19,13 @@ defined( 'ABSPATH' ) || exit;
 
 $customer_id = get_current_user_id();
 
-if ( ! wc_ship_to_billing_address_only() && wc_shipping_enabled() ) {
-	$get_addresses = apply_filters(
-		'woocommerce_my_account_get_addresses',
-		array(
-			'billing'  => __( 'Billing address', 'woocommerce' ),
-			'shipping' => __( 'Shipping address', 'woocommerce' ),
-		),
-		$customer_id
-	);
-} else {
-	$get_addresses = apply_filters(
-		'woocommerce_my_account_get_addresses',
-		array(
-			'billing' => __( 'Billing address', 'woocommerce' ),
-		),
-		$customer_id
-	);
-}
+$get_addresses = apply_filters(
+    'woocommerce_my_account_get_addresses',
+    array(
+        'shipping' => __( 'Shipping address', 'woocommerce' ),
+    ),
+    $customer_id
+);
 
 $oldcol = 1;
 $col    = 1;
@@ -57,20 +46,23 @@ $col    = 1;
 		$oldcol  = $oldcol * -1;
 	?>
 
-	<div class="u-column<?php echo $col < 0 ? 1 : 2; ?> col-<?php echo $oldcol < 0 ? 1 : 2; ?> woocommerce-Address">
-		<header class="woocommerce-Address-title title">
-			<h2><?php echo esc_html( $address_title ); ?></h2>
-			<a href="<?php echo esc_url( wc_get_endpoint_url( 'edit-address', $name ) ); ?>" class="edit">
-				<?php
-					printf(
-						/* translators: %s: Address title */
-						$address ? esc_html__( 'Edit %s', 'woocommerce' ) : esc_html__( 'Add %s', 'woocommerce' ),
-						esc_html( $address_title )
-					);
-				?>
-			</a>
+	<div class="woocommerce-Address">
+		<header class="mt-6 mb-2 woocommerce-Address-title title">
+			<h2 class="text-xs md:text-base lg:text-xl xl:text-2xl leading-tight font-sans font-medium text-black"><?php echo esc_html( $address_title ); ?></h2>
 		</header>
-		<address>
+        <a href="<?php echo esc_url( wc_get_endpoint_url( 'edit-address', $name ) ); ?>" target="_self" class="inline-block w-full text-center relative font-medium transition-all before:content-[''] before:duration-300 before:ease-out before:top-0 before:left-0 before:bottom-0 before:w-0 before:absolute before:h-full hover:before:w-full hover:before:bg-black">
+                <span class="px-6 py-2 border border-black inline-block w-full hover:text-white-10 relative top-0 left-0 transition-all">
+                    <?php
+                    printf(
+                    /* translators: %s: Address title */
+                        $address ? esc_html__( 'Edit %s', 'woocommerce' ) : esc_html__( 'Add %s', 'woocommerce' ),
+                        esc_html( $address_title )
+                    );
+                    ?>
+                </span>
+        </a>
+
+		<address class="mt-6">
 			<?php
 				echo $address ? wp_kses_post( $address ) : esc_html_e( 'You have not set up this type of address yet.', 'woocommerce' );
 

@@ -28,7 +28,7 @@ echo wc_get_stock_html( $product ); // WPCS: XSS ok.
 if ( $product->is_in_stock() ) : ?>
 
 	<?php do_action( 'woocommerce_before_add_to_cart_form' ); ?>
-    <div class="hidden md:block md:pt-8 md:mt-8 md:border-t border-black btn_add_to_cart">
+    <div class="hidden md:block md:pt-4 md:mt-6 md:border-t border-black btn_add_to_cart">
         <form class="cart" action="<?php echo esc_url( apply_filters( 'woocommerce_add_to_cart_form_action', $product->get_permalink() ) ); ?>" method="post" enctype='multipart/form-data'>
             <?php do_action( 'woocommerce_before_add_to_cart_button' ); ?>
 
