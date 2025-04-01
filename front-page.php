@@ -18,7 +18,7 @@ if (function_exists('get_field')) {
     $logo_svg = get_field('logo_svg');
 }
 ?>
-<main class="flex flex-col h-svh">
+<main class="min-h-dvh flex flex-col h-svh">
     <div class="basis-1/2 flex justify-end px-[2.8vmax] pt-[2.8vmax]">
         <div class="xs:pr-[7vmax]">
             <?php if(!empty($logo_svg)): ?>

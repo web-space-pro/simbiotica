@@ -23,22 +23,28 @@ global $product;
 
 $gallery_images = $product->get_gallery_image_ids();
 
+$product_id = $product->get_id();
+$meta_data = get_post_meta($product_id);
+$custom_field_value = get_post_meta($product_id, '_wapf_fieldgroup', true);
 ?>
 <div class="mb-5">
-    <p class="font-sans text-xl md:text-2xl text-black mb-5 mt-5"><?php echo $product->get_price_html(); ?></p>
+    <?php if (empty($custom_field_value)): ?>
+        <p class="font-sans text-xl md:text-2xl text-black mb-5 mt-5"><?php echo $product->get_price_html(); ?></p>
+    <?php endif; ?>
     <div class="block md:hidden add_to_cart_mobile">
         <?php woocommerce_template_single_add_to_cart(); ?>
     </div>
 </div>
 <div class="block md:hidden">
     <div class="relative h-full">
-        <div class="xs:w-1/2 m-auto relative md:w-full md:sticky md:top-20 2xl:top-16">
+        <div class="w-full sm:w-1/2 md:w-full m-auto">
             <?php  if (!empty($gallery_images)): ?>
-                <div class="slider" id="slider-mobile">
+                <div class="slider relative sm:h-[min(73vw,73vh)] aspect-square" id="slider-mobile">
                     <?php
                     foreach ($gallery_images as $image_id) {
                         echo wp_get_attachment_image($image_id, 'post');
                     }
+
                     ?>
                 </div>
             <?php else: ?>

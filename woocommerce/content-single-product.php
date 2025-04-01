@@ -34,16 +34,25 @@ $gallery_images = $product->get_gallery_image_ids();
 ?>
 <div id="product-<?php the_ID(); ?>" <?php wc_product_class( 'h-full', $product ); ?>>
     <div class="flex flex-col md:flex-row gap-4 md:gap-16">
-        <div class="hidden md:block md:w-6/12 xl:w-7/12">
+        <div class="hidden md:block md:w-6/12">
             <div class="relative h-full">
                 <div class="xs:w-1/2 m-auto  md:w-full md:sticky md:top-20 2xl:top-16">
                     <?php  if (!empty($gallery_images)): ?>
-                    <div class="slider" id="slider-product">
-                        <?php
-                        foreach ($gallery_images as $image_id) {
-                            echo wp_get_attachment_image($image_id, 'post');
-                        }
-                        ?>
+                    <div class="slider relative xs:h-[min(73vw,73vh)] aspect-square" id="slider-product">
+                         <?php foreach ($gallery_images as $image_id):
+                            $image = wp_get_attachment_image($image_id, 'full', false, ['class' => 'w-full h-full object-cover']);
+                            $attachment = get_post($image_id);
+                            $description = $attachment->post_content;
+                            ?>
+                        <div class="relative w-full h-full">
+                            <?= $image ?>
+                            <?php if (!empty($description)): ?>
+                                <div class="img_desc hidden absolute bottom-0 right-0 p-2 sm:p-5 bg-white-10 border border-b-0 border-r-0 border-black text-xs w-auto h-auto bg-red-700">
+                                    <?= wpautop($description) ?>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                        <?php endforeach; ?>
                     </div>
                     <?php else: ?>
                         <div class="post-thumbnail">
@@ -62,7 +71,7 @@ $gallery_images = $product->get_gallery_image_ids();
             do_action( 'woocommerce_before_single_product_summary' );
             ?>
         </div>
-        <div class="md:w-6/12 xl:w-5/12">
+        <div class="md:w-6/12">
             <?php
             /**
              * Hook: woocommerce_single_product_summary.

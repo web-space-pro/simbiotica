@@ -104,6 +104,14 @@ function simbiotica_filter_products_by_category() {
     wp_die();
 }
 
+function custom_woocommerce_thumbnail_size($size) {
+    return array(
+        'width'  => 1024, // Новая ширина
+        'height' => 1024, // Новая высота
+        'crop'   => 1    // Обрезка (1 = включена)
+    );
+}
+add_filter('woocommerce_get_image_size_thumbnail', 'custom_woocommerce_thumbnail_size');
 
 
 

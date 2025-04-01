@@ -25,61 +25,92 @@ $categories = get_terms([
     'taxonomy'   => 'product_cat',
     'hide_empty' => false,
     'exclude'    => [15],
-    'orderby'    => 'date',
+    'orderby'    => 'name',
     'order'      => 'DESC',
 ]);
-
-// Определяем активную категорию (если не выбрана - берём первую)
-$first_categoryID    = !empty($categories) && is_array($categories) ? $categories[0]->term_id : '';
-$current_category_id = is_tax('product_cat') ? get_queried_object_id() : $first_categoryID;
-
-// Создаём кастомный запрос для вывода товаров только из выбранной категории
-$args = [
-    'post_type'      => 'product',
-    'posts_per_page' => -1,
-    'tax_query'      => [
-        [
-            'taxonomy' => 'product_cat',
-            'field'    => 'term_id',
-            'terms'    => $first_categoryID,
-        ]
-    ]
-];
-
-// Подменяем глобальный запрос WooCommerce
-$query = new WP_Query($args);
 ?>
+
 <div class="min-h-svh flex-grow-1 flex flex-col px-4 sm:px-[2.8vmax] pt-6 pb-6">
     <?php
     do_action( 'woocommerce_before_main_content' );
     do_action('woocommerce_shop_loop_header');
     ?>
+    <?php foreach ($categories as $category) :
+        $args = [
+            'post_type'      => 'product',
+            'posts_per_page' => -1,
+            'tax_query'      => [
+                [
+                    'taxonomy' => 'product_cat',
+                    'field'    => 'term_id',
+                    'terms'    => $category->term_id,
+                ]
+            ]
+        ];
+        $query = new WP_Query($args);
 
-    <section class="filter-product">
-        <div class="pb-6 sm:pb-8 flex gap-2 sm:gap-4 lowercase items-center overflow-x-auto scrollbar-none">
-            <?php foreach ($categories as $key => $item) :
-                $is_active = ($current_category_id == $item->term_id) ? 'active' : '';
-                ?>
-                <button type="button" data-id="<?= esc_attr($item->term_id) ?>" data-name="<?= esc_attr($item->slug) ?>"
-                        class="<?= $is_active ?> w-fit lowercase outline-none hover:border-gray-10 border-gray-10/0 border px-2 py-1 shrink-0 border-black">
-                    <?= esc_html($item->name) ?>
-                </button>
-            <?php endforeach; ?>
-        </div>
-    </section>
+        if ($query->have_posts()) : ?>
+            <section class="mb-7 sm:mb-10">
+                <div id="category-<?= esc_attr($category->term_id) ?>" class="offset-anchor"></div>
+                <h2 class="text-2xl font-bold mb-4"> <?= esc_html($category->name) ?> </h2>
+                <ul class="grid grid-cols-2 lg:grid-cols-3 gap-4">
+                    <?php while ($query->have_posts()) : $query->the_post();
+                        wc_get_template_part('content', 'product');
+                    endwhile; ?>
+                </ul>
+            </section>
+        <?php endif;
+        wp_reset_postdata();
+    endforeach; ?>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const buttons = document.querySelectorAll('.scroll-to');
+            const sections = document.querySelectorAll('.offset-anchor');
+            const headerHeight = document.querySelector('header');
+            const headerOffset =  headerHeight.getBoundingClientRect().height;
 
-    <section class="mb-7 sm:mb-10">
-        <ul id="products-list" class="grid grid-cols-2 lg:grid-cols-3 gap-4">
-            <?php if ($query->have_posts()) : ?>
-                <?php while ($query->have_posts()) : $query->the_post(); ?>
-                    <?php wc_get_template_part('content', 'product'); ?>
-                <?php endwhile; ?>
-            <?php else : ?>
-                <p class="text-center text-gray-500 col-span-2 lg:col-span-3">Товары не найдены</p>
-            <?php endif; ?>
-        </ul>
-    </section>
+            function updateActiveButton(targetId) {
+                buttons.forEach(btn => {
+                    btn.classList.remove('active');
+                });
+
+                const activeButton = document.querySelector(`.scroll-to[data-target="${targetId}"]`);
+                if (activeButton) {
+                    activeButton.classList.add('active');
+                }
+            }
+
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const target = document.getElementById(this.getAttribute('data-target'));
+                    if (target) {
+                        window.scrollTo({
+                            top: target.offsetTop - headerOffset,
+                            behavior: 'smooth'
+                        });
+                        updateActiveButton(this.getAttribute('data-target'));
+                    }
+                });
+            });
+
+            const observer = new IntersectionObserver(entries => {
+                let activeId = null;
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        activeId = entry.target.id;
+                    }
+                });
+                if (activeId) {
+                    updateActiveButton(activeId);
+                }
+            }, { rootMargin: "-90px 0px -80% 0px", threshold: 0.2 });
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
 
     <?php
     do_action( 'woocommerce_after_main_content' );

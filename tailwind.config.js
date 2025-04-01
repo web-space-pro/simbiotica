@@ -15,6 +15,7 @@ module.exports = {
       'single-services.php',
       'single.php',
       'content-parts/content.php',
+      'content-parts/content-projects.php',
       'content-parts/content-page.php',
 
       'block-parts/tpl-hero.php',
@@ -23,6 +24,7 @@ module.exports = {
       'block-parts/tpl-contact-us.php',
       'block-parts/tpl-offer.php',
       'block-parts/tpl-projects-list.php',
+      'block-parts/tpl-content.php',
 
       'woocommerce/archive-product.php',
       'woocommerce/content-product.php',

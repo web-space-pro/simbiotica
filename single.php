@@ -10,7 +10,7 @@
 
 
     <?php get_header(); ?>
-    <main class="min-h-svh flex-grow-1 flex flex-col px-4 sm:px-[2.8vmax] pt-6 pb-6">
+    <main class="min-h-dvh flex-grow-1 flex flex-col px-4 sm:px-[2.8vmax] pt-6 pb-6">
             <?php
             while ( have_posts() ) :
                 the_post();

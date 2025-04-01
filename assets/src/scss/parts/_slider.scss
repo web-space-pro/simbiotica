@@ -1,19 +1,29 @@
 .slider{
-  @apply w-full bg-[#F6F6F6] border border-gray-10 md:h-[65svh] xl:h-[75svh] overflow-hidden;
-  .slick-list, .slick-track, .slick-slide, .slick-slide div{
-    @apply h-full w-full ;
+  @apply w-full bg-[#F6F6F6] border border-gray-10;
+  .slick-list, .slick-track, .slick-slide, .slick-slide > div{
+    @apply h-full w-full;
   }
   img{
     @apply w-full h-full aspect-[3/4] object-cover object-center;
   }
+  .slick-active{
+    .img_desc{
+      @apply block;
+    }
+  }
   .slick-prev, .slick-next{
-    @apply absolute z-10 top-4 p-1.5 flex bg-black border border-black cursor-pointer;
+    @apply absolute z-10 top-4 p-2 flex bg-white-10 cursor-pointer;
+    svg{
+      path{
+        fill: black;
+      }
+    }
     &:hover svg{
       opacity: .7;
     }
   }
   .slick-prev{
-    @apply right-[2.8rem] sm:right-[3.2rem];
+    @apply right-[3.3rem] sm:right-[4rem];
   }
   .slick-next{
     @apply right-2 sm:right-4;

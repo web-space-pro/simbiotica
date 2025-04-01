@@ -126,6 +126,13 @@ s.addresses {
  }
 }
 
+
+.single-product{
+ .wapf-grand-total{
+  @apply font-sans !text-xl md:!text-2xl !text-black;
+ }
+}
+
 .wapf-product-totals .wapf--inner div:first-child{
   display: none!important;
 }
