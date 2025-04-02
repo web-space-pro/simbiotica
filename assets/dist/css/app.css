@@ -2855,6 +2855,12 @@ body .cky-consent-container .cky-notice p{
   .xl\:w-2\/6{
     width: 33.333333%;
   }
+  .xl\:w-4\/12{
+    width: 33.333333%;
+  }
+  .xl\:w-8\/12{
+    width: 66.666667%;
+  }
   .xl\:w-\[45\%\]{
     width: 45%;
   }
