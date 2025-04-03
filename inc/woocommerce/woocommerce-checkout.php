@@ -1,11 +1,6 @@
 <?php
-add_filter('woocommerce_coupons_enabled', 'simbiotica_remove_checkout_coupon_field');
-add_filter('woocommerce_checkout_fields', 'simbiotica_checkout_fields');
-add_action('wp', 'simbiotica_remove_order_details_review');
 
-//add_filter('woocommerce_checkout_fields', 'simbiotica_remove_checkout_sections');
-//add_filter('woocommerce_available_payment_gateways', 'simbiotica_available_payment_gateways');
-
+remove_action('woocommerce_checkout_order_review', 'woocommerce_order_review', 10);
 
 //Удаление <label> в форме оформления заказа
 add_filter('woocommerce_form_field', function($field, $key, $args) {
@@ -15,117 +10,159 @@ add_filter('woocommerce_form_field', function($field, $key, $args) {
     return $field;
 }, 10, 3);
 
-function simbiotica_remove_checkout_coupon_field($enabled) {
-    if (is_checkout()) {
-        return false;
-    }
-    return $enabled;
-}
+add_filter('woocommerce_checkout_fields', 'simbiotica_checkout_fields');
 
 function simbiotica_checkout_fields($fields) {
-    // Удаляем все ненужные поля
-    unset($fields['billing']['billing_company']);       // Компания
-    unset($fields['billing']['billing_address_1']);     // Адрес 1
-    unset($fields['billing']['billing_address_2']);     // Адрес 2
-    unset($fields['billing']['billing_city']);          // Город
-    unset($fields['billing']['billing_state']);         // Регион/Область
-    unset($fields['billing']['billing_postcode']);      // Почтовый индекс
-    unset($fields['billing']['billing_country']);       // Страна
-//    unset($fields['billing']['billing_email']);         // Email
-    unset($fields['billing']['billing_company']);       // Название компании
-    unset($fields['billing']['billing_phone']);         //
+    unset($fields['billing']['billing_company']);
+    unset($fields['billing']['billing_address_2']);
+    unset($fields['billing']['billing_address_1']);
+    unset($fields['billing']['billing_postcode']);
+    unset($fields['billing']['billing_state']);
+    unset($fields['billing']['billing_city']);
+    unset($fields['billing']['billing_apartment']);
+//    unset($fields['billing']['billing_country']);
+    unset($fields['billing']['billing_last_name']);
 
-    unset($fields['shipping']); //весь блок доставки
+    unset($fields['shipping']['shipping_company']);
+    unset($fields['shipping']['shipping_address_2']);
+    unset($fields['shipping']['shipping_address_1']);
+    unset($fields['shipping']['shipping_postcode']);
+    unset($fields['shipping']['shipping_state']);
+    unset($fields['shipping']['shipping_city']);
+//    unset($fields['shipping']['shipping_country']);
+    unset($fields['shipping']['shipping_last_name']);
 
-    //вывод нужных полей
-    $fields['billing'] = array(
-        'billing_first_name' => array(
-            'label'    => __('ФИО', 'woocommerce'),
-            'required' => true,
-            'class'    => array('form-row-wide'),
-            'placeholder' => __('ФИО', 'woocommerce'),
-            'priority' => 10,
-        ),
-        'billing_email' => array(
-            'label'       => __('Email', 'woocommerce'),
-            'required'    => true,
-            'class'       => array('form-row-wide'),
-            'placeholder' => __('Email', 'woocommerce'),
-            'priority'    => 20,
-            'type'        => 'email',
-        ),
-        'billing_phone' => array(
-            'label'    => __('Телефон', 'woocommerce'),
-            'required' => true,
-            'class'    => array('form-row-wide'),
-            'placeholder' => __('Телефон', 'woocommerce'),
-            'priority' => 25,
-        ),
-        'order_comments' => array(
-            'label'    => __('Комментарий к заказу', 'woocommerce'),
-            'type'        => 'textarea',
-            'class'       => ['form-row-wide', 'notes'],
-            'placeholder' => __('Комментарий к заказу', 'woocommerce'),
-            'required'    => false,
-            'priority'    => 30
-        ),
+    // Настроим billing поля
+    $fields['billing']['billing_first_name'] = array(
+        'type'        => 'text',
+        'label'       => __('ФИО', 'woocommerce'),
+        'placeholder' => __('ФИО', 'woocommerce'),
+        'required'    => true,
+        'class'       => array('form-row-wide'),
+        'priority'    => 10,
     );
+    $fields['billing']['billing_phone'] = array(
+        'type'        => 'tel',
+        'label'       => __('Телефон', 'woocommerce'),
+        'placeholder' => __('Телефон', 'woocommerce'),
+        'required'    => true,
+        'class'       => array('form-row-wide'),
+        'priority'    => 20,
+    );
+    $fields['billing']['billing_email'] = array(
+        'type'        => 'email',
+        'label'       => __('Email', 'woocommerce'),
+        'placeholder' => __('Email', 'woocommerce'),
+        'required'    => true,
+        'class'       => array('form-row-wide'),
+        'priority'    => 30,
+    );
+
+    // Дублируем поля для Shipping (они будут скрыты, но данные сохранятся)
+    $fields['shipping']['shipping_first_name'] = $fields['billing']['billing_first_name'];
+    $fields['shipping']['shipping_phone'] = $fields['billing']['billing_phone'];
+    $fields['shipping']['shipping_email'] = $fields['billing']['billing_email'];
 
     return $fields;
 }
 
-function simbiotica_remove_checkout_sections($sections) {
-    // Удаляем ненужные блоки
-    unset($sections['billing']);    // Убираем ненужные поля биллинга
-    unset($sections['shipping']);   // Убираем доставку (если не нужна)
-    unset($sections['account']);    // Убираем создание аккаунта
-    return $sections;
-}
+add_action('woocommerce_checkout_update_order_meta', 'simbiotica_billing_to_shipping');
 
-function simbiotica_available_payment_gateways($gateways) {
-
-//    unset($gateways['cod']); // "Оплата при доставке"
-    unset($gateways['paypal']); //  PayPal
-    return $gateways;
-}
-
-function simbiotica_remove_order_details_review() {
-    remove_action('woocommerce_checkout_order_review', 'woocommerce_order_review', 10);
-}
-
-add_filter( 'woocommerce_account_menu_items', function( $items ) {
-//    unset( $items['edit-address'] ); // Убирает "Платежные адреса"
-    unset( $items['downloads'] ); // Убирает "Загрузки"
-    return $items;
-} );
-
-add_action( 'woocommerce_checkout_process', function() {
-    if ( ! is_user_logged_in() ) {
-        $email = isset( $_POST['billing_email'] ) ? sanitize_email( $_POST['billing_email'] ) : '';
-
-        if ( email_exists( $email ) ) {
-            wc_add_notice( 'Этот email уже зарегистрирован. Пожалуйста, войдите в свою учетную запись.', 'error' );
-        } else {
-            $username = sanitize_user( current( explode( '@', $email ) ) ); // Создание логина из email
-            $password = wp_generate_password();
-            $user_id  = wp_create_user( $username, $password, $email );
-
-            if ( ! is_wp_error( $user_id ) ) {
-                wc_set_customer_auth_cookie( $user_id ); // Автоматический вход
-            }
-        }
+function simbiotica_billing_to_shipping($order_id) {
+    if (!empty($_POST['billing_first_name'])) {
+        update_post_meta($order_id, '_billing_first_name', sanitize_text_field($_POST['billing_first_name']));
+        update_post_meta($order_id, '_shipping_first_name', sanitize_text_field($_POST['billing_first_name']));
     }
-} );
+    if (!empty($_POST['billing_phone'])) {
+        update_post_meta($order_id, '_billing_phone', sanitize_text_field($_POST['billing_phone']));
+        update_post_meta($order_id, '_shipping_phone', sanitize_text_field($_POST['billing_phone']));
+    }
+    if (!empty($_POST['billing_email'])) {
+        update_post_meta($order_id, '_billing_email', sanitize_text_field($_POST['billing_email']));
+        update_post_meta($order_id, '_shipping_email', sanitize_text_field($_POST['billing_email']));
+    }
+}
+
+add_filter('woocommerce_default_address_fields', function ($fields) {
+    $fields['address_1']['required'] = false;
+    $fields['city']['required'] = false;
+    $fields['state']['required'] = false;
+    $fields['postcode']['required'] = false;
+    $fields['country']['required'] = false;
+    return $fields;
+});
+
+//Отображение сохранённых полей в админке заказа
+add_action('woocommerce_admin_order_data_after_billing_address', 'display_custom_billing_fields', 10, 1);
+function display_custom_billing_fields($order) {
+    echo '<p><strong>' . __('ФИО:', 'woocommerce') . '</strong> ' . get_post_meta($order->get_id(), '_billing_first_name', true) . '</p>';
+    echo '<p><strong>' . __('Телефон:', 'woocommerce') . '</strong> ' . get_post_meta($order->get_id(), '_billing_phone', true) . '</p>';
+    echo '<p><strong>' . __('Email:', 'woocommerce') . '</strong> ' . get_post_meta($order->get_id(), '_billing_email', true) . '</p>';
+}
 
 
+add_filter('woocommerce_add_error', function ($error) {
+    return str_replace('Платежи', 'Поле', $error);
+});
+
+add_filter('woocommerce_checkout_fields', function ($fields) {
+    $fields['order']['order_comments']['placeholder'] = __('комментарий к заказу', 'woocommerce');
+    return $fields;
+});
 
 
+add_action('wp_footer', 'force_checkout_create_account_js');
+function force_checkout_create_account_js() {
+    if (!is_user_logged_in() && is_checkout() && !is_wc_endpoint_url()) :
+        ?>
+        <script>
+            (function($){
+                $(document).ready(function(){
+                    let $createAccount = $('input[name=createaccount]');
+                    if ($createAccount.length) {
+                        $createAccount.prop('checked', true).trigger('change');
+                    }
+                });
+            })(jQuery);
+        </script>
+    <?php
+    endif;
+}
 
+add_action( 'woocommerce_thankyou', 'show_password_email_message_for_new_users', 10, 1 );
 
-//function simbiotica_remove_order_details_thankyou($order_id) {
-//    remove_action('woocommerce_thankyou', 'woocommerce_order_details_table', 10);
-//}
-//add_action('wp', 'simbiotica_remove_order_details_thankyou');
+function show_password_email_message_for_new_users( $order_id ) {
+    if ( ! $order_id ) return;
+
+    $order = wc_get_order( $order_id );
+    $user_id = $order->get_user_id();
+
+    // Проверяем, есть ли у пользователя другие заказы
+    $has_previous_orders = wc_get_customer_order_count( $user_id ) > 1;
+
+    if ( $user_id && ! $has_previous_orders ) {
+        $user_email = $order->get_billing_email();
+        echo '<p class="woocommerce-message text-center font-xl font-bold">Спасибо за заказ! Ваш пароль для входа в личный кабинет был выслан на указанный email: ' . esc_html( $user_email ) . '.</p>';
+    }
+}
+
+// Добавляем сообщение в личный кабинет WooCommerce
+add_action( 'woocommerce_account_dashboard', 'show_welcome_message_for_new_users' );
+
+function show_welcome_message_for_new_users() {
+    $user_id = get_current_user_id();
+
+    if ( ! $user_id ) return; // Если не залогинен, выходим
+
+    // Проверяем, есть ли у пользователя другие заказы
+    $has_previous_orders = wc_get_customer_order_count( $user_id ) > 1;
+
+    if ( ! $has_previous_orders ) {
+        $user_email = wp_get_current_user()->user_email;
+        echo '<p class="woocommerce-message text-center font-xl font-bold">Добро пожаловать! Ваш пароль для входа был выслан на email: ' . esc_html( $user_email ) . '.</p>';
+    }
+}
+
 
 
 

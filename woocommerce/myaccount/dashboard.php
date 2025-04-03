@@ -28,33 +28,42 @@ $allowed_html = array(
 );
 ?>
 
-<p>
-	<?php
-	printf(
-		/* translators: 1: user display name 2: logout url */
-		wp_kses( __( 'Hello %1$s (not %1$s? <a href="%2$s">Log out</a>)', 'woocommerce' ), $allowed_html ),
-		'<strong>' . esc_html( $current_user->display_name ) . '</strong>',
-		esc_url( wc_logout_url() )
-	);
-	?>
-</p>
+<div class="mt-10">
+    <div class="p-6 rounded-lg shadow-md">
+        <h2 class="text-2xl font-semibold mb-4">Добро пожаловать в личный кабинет!</h2>
+        <p class="text-lg mb-6">Рады видеть вас в вашем личном кабинете! Используйте следующие возможности:</p>
 
-<p>
-	<?php
-	/* translators: 1: Orders URL 2: Address URL 3: Account URL. */
-	$dashboard_desc = __( 'From your account dashboard you can view your <a href="%1$s">recent orders</a>, manage your <a href="%2$s">billing address</a>, and <a href="%3$s">edit your password and account details</a>.', 'woocommerce' );
-	if ( wc_shipping_enabled() ) {
-		/* translators: 1: Orders URL 2: Addresses URL 3: Account URL. */
-		$dashboard_desc = __( 'From your account dashboard you can view your <a href="%1$s">recent orders</a>, manage your <a href="%2$s">shipping and billing addresses</a>, and <a href="%3$s">edit your password and account details</a>.', 'woocommerce' );
-	}
-	printf(
-		wp_kses( $dashboard_desc, $allowed_html ),
-		esc_url( wc_get_endpoint_url( 'orders' ) ),
-		esc_url( wc_get_endpoint_url( 'edit-address' ) ),
-		esc_url( wc_get_endpoint_url( 'edit-account' ) )
-	);
-	?>
-</p>
+        <ul class="space-y-4">
+            <li class="flex items-center">
+                <svg class="w-6 h-6 text-[#10283A] mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12h-6m3-3v6M5 12a7 7 0 0114 0 7 7 0 01-14 0z"></path>
+                </svg>
+                <span class="text-gray-800">Просматривайте <a href="/my-account/orders">историю заказов</a> и отслеживайте их статус.</span>
+            </li>
+            <li class="flex items-center">
+                <svg class="w-6 h-6 text-[#10283A] mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11l2 2 4-4m1 4v8a2 2 0 002 2h4a2 2 0 002-2v-8a2 2 0 00-2-2h-4a2 2 0 00-2 2z"></path>
+                </svg>
+                <span class="text-gray-800">Управляйте <a href="/my-account/wishlist">избранными товарами</a>.</span>
+            </li>
+            <li class="flex items-center">
+                <svg class="w-6 h-6 text-[#10283A] mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+                <span class="text-gray-800">Обновляйте <a href="/my-account/edit-address">информацию о доставке</a>.</span>
+            </li>
+            <li class="flex items-center">
+                <svg class="w-6 h-6 text-[#10283A] mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 10h6m-3 3v6m-4 2a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                </svg>
+                <span class="text-gray-800">Измените <a href="/my-account/edit-account/">личные данные</a>.</span>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+
 
 <?php
 	/**

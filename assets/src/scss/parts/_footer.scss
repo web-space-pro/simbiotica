@@ -1,5 +1,8 @@
 .menu-footer{
+  .menu-item{
+    @apply xs:mr-7 ml-0;
+  }
   li{
-    @apply mx-2 mb-2 lg:mb-0 inline-block;
+    @apply mx-2 xs:mb-0 mb-2 inline-block;
   }
 }

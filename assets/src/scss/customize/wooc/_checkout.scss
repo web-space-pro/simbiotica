@@ -1,0 +1,29 @@
+.woocommerce-additional-fields{
+  //display: none !important;
+}
+.woocommerce-account-fields{
+  display: none !important;
+}
+.woocommerce-terms-and-conditions-wrapper{
+  display: none !important;
+}
+.woocommerce-billing-fields{
+  .address-field, h3{
+    display: none !important;
+  }
+}
+.woocommerce-shipping-fields{
+  display: none !important;
+}
+.woocommerce-checkout{
+  .woocommerce-NoticeGroup,
+  .woocommerce-NoticeGroup-checkout {
+    //display: none !important;
+  }
+  #woocommerce-checkout {
+    opacity: 1 !important;
+  }
+  .blockUI.blockOverlay {
+    display: none !important;
+  }
+}

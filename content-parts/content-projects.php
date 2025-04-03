@@ -35,7 +35,7 @@ if (!is_cart() && !is_checkout() && !is_wc_endpoint_url('order-received') && !is
                         <?php endforeach; ?>
                     </div>
                 <?php else: ?>
-                    <div class="post-thumbnail  xs:h-[min(73vw,73vh)] aspect-square sticky top-4">
+                    <div class="post-thumbnail w-full xs:h-[min(73vw,73vh)] aspect-square sticky top-4">
                         <?php the_post_thumbnail('post', ['class' => 'w-full h-full object-cover']); ?>
                     </div>
                 <?php endif; ?>
@@ -69,7 +69,7 @@ if (!is_cart() && !is_checkout() && !is_wc_endpoint_url('order-received') && !is
                         <?php endforeach; ?>
                     </div>
                 <?php else: ?>
-                    <div class="post-thumbnail  xs:h-[min(73vw,73vh)] aspect-square sticky top-4">
+                    <div class="post-thumbnail w-full xs:h-[min(73vw,73vh)] aspect-square sticky top-4">
                         <?php the_post_thumbnail('post', ['class' => 'w-full h-full object-cover']); ?>
                     </div>
                 <?php endif; ?>

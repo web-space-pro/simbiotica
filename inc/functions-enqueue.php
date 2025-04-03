@@ -23,8 +23,6 @@ function simbiotica_theme_scripts()
 function simbiotica_theme_styles()
 {
 	$ver = wp_get_theme()->get( 'Version' );
-
-
 //	wp_enqueue_style('vendors', get_template_directory_uri() . '/assets/dist/vendors.css', array(), $ver, 'all');
 	wp_enqueue_style('app', get_template_directory_uri() . '/assets/dist/css/app.css', array(), $ver, 'all');
 }

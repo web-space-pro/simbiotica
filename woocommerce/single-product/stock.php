@@ -20,4 +20,4 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 ?>
-<p class="text-gray-10 <?php echo esc_attr( $class ); ?>"><?php echo wp_kses_post( $availability ); ?></p>
+<p class="text-gray-10 font-bold mt-4 <?php echo esc_attr( $class ); ?>"><?php echo wp_kses_post( $availability ); ?></p>

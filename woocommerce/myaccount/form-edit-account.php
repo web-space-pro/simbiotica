@@ -12,37 +12,42 @@
  *
  * @see https://woocommerce.com/document/template-structure/
  * @package WooCommerce\Templates
- * @version 9.6.0
+ * @version 9.7.0
  */
 
 defined( 'ABSPATH' ) || exit;
 
-do_action( 'woocommerce_before_edit_account_form' ); ?>
+/**
+ * Hook - woocommerce_before_edit_account_form.
+ *
+ * @since 2.6.0
+ */
+do_action( 'woocommerce_before_edit_account_form' );
+?>
+
 
 <form class="woocommerce-EditAccountForm edit-account" action="" method="post" <?php do_action( 'woocommerce_edit_account_form_tag' ); ?> >
 
 	<?php do_action( 'woocommerce_edit_account_form_start' ); ?>
 
-	<p class="woocommerce-form-row woocommerce-form-row--first form-row form-row-first">
-		<label for="account_first_name"><?php esc_html_e( 'First name', 'woocommerce' ); ?>&nbsp;<span class="required">*</span></label>
-		<input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="account_first_name" id="account_first_name" autocomplete="given-name" value="<?php echo esc_attr( $user->first_name ); ?>" />
-	</p>
-	<p class="woocommerce-form-row woocommerce-form-row--last form-row form-row-last">
-		<label for="account_last_name"><?php esc_html_e( 'Last name', 'woocommerce' ); ?>&nbsp;<span class="required">*</span></label>
-		<input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="account_last_name" id="account_last_name" autocomplete="family-name" value="<?php echo esc_attr( $user->last_name ); ?>" />
-	</p>
-	<div class="clear"></div>
+	<div class="flex flex-col  sm:flex-row gap-4 w-full justify-between">
+        <p class="flex-1 nwoocommerce-form-row woocommerce-form-row--first form-row form-row-first">
+            <label for="account_first_name"><?php esc_html_e( 'First name', 'woocommerce' ); ?>&nbsp;<span class="required" aria-hidden="true">*</span></label>
+            <input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="account_first_name" id="account_first_name" autocomplete="given-name" value="<?php echo esc_attr( $user->first_name ); ?>" aria-required="true" />
+        </p>
 
-	<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
-		<label for="account_display_name"><?php esc_html_e( 'Display name', 'woocommerce' ); ?>&nbsp;<span class="required">*</span></label>
-		<input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="account_display_name" id="account_display_name" value="<?php echo esc_attr( $user->display_name ); ?>" aria-describedby="account_display_name_description" /> <span id="account_display_name_description"><em><?php esc_html_e( 'This will be how your name will be displayed in the account section and in reviews', 'woocommerce' ); ?></em></span>
-	</p>
-	<div class="clear"></div>
+        <p class="flex-1 woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+            <label for="account_email"><?php esc_html_e( 'Email address', 'woocommerce' ); ?>&nbsp;<span class="required" aria-hidden="true">*</span></label>
+            <input type="email" class="woocommerce-Input woocommerce-Input--email input-text" name="account_email" id="account_email" autocomplete="email" value="<?php echo esc_attr( $user->user_email ); ?>" aria-required="true" />
+        </p>
 
-	<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
-		<label for="account_email"><?php esc_html_e( 'Email address', 'woocommerce' ); ?>&nbsp;<span class="required">*</span></label>
-		<input type="email" class="woocommerce-Input woocommerce-Input--email input-text" name="account_email" id="account_email" autocomplete="email" value="<?php echo esc_attr( $user->user_email ); ?>" />
-	</p>
+        <p class="flex-1 woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+            <label for="reg_billing_phone">
+                <?php _e( 'Phone', 'woocommerce' ); ?>
+            </label>
+            <input type="text" class="common-input woocommerce-Input woocommerce-Input--text input-text" name="billing_phone" id="reg_billing_phone" value="<?php echo esc_attr( $user->billing_phone ); ?>" />
+        </p>
+    </div>
 
 	<?php
 		/**
@@ -53,8 +58,8 @@ do_action( 'woocommerce_before_edit_account_form' ); ?>
 		do_action( 'woocommerce_edit_account_form_fields' );
 	?>
 
-	<fieldset>
-		<legend><?php esc_html_e( 'Password change', 'woocommerce' ); ?></legend>
+	<fieldset class="mt-3">
+		<legend class="mb-3"><?php esc_html_e( 'Password change', 'woocommerce' ); ?></legend>
 
 		<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
 			<label for="password_current"><?php esc_html_e( 'Current password (leave blank to leave unchanged)', 'woocommerce' ); ?></label>
@@ -69,7 +74,7 @@ do_action( 'woocommerce_before_edit_account_form' ); ?>
 			<input type="password" class="woocommerce-Input woocommerce-Input--password input-text" name="password_2" id="password_2" autocomplete="off" />
 		</p>
 	</fieldset>
-	<div class="clear"></div>
+
 
 	<?php
 		/**

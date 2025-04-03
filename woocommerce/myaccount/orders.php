@@ -23,98 +23,69 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
 
 <?php if ( $has_orders ) : ?>
 
-	<table class="woocommerce-orders-table woocommerce-MyAccount-orders shop_table shop_table_responsive my_account_orders account-orders-table">
-		<thead>
-			<tr>
-				<?php foreach ( wc_get_account_orders_columns() as $column_id => $column_name ) : ?>
-					<th scope="col" class="woocommerce-orders-table__header woocommerce-orders-table__header-<?php echo esc_attr( $column_id ); ?>"><span class="nobr"><?php echo esc_html( $column_name ); ?></span></th>
-				<?php endforeach; ?>
-			</tr>
-		</thead>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <?php foreach ($customer_orders->orders as $customer_order):
+        $order      = wc_get_order($customer_order);
+        $item_count = $order->get_item_count() - $order->get_item_count_refunded();
+    ?>
+        <div class="woocommerce-order-card flex-1 border border-gray-200 rounded-lg p-4 shadow-sm">
+                <h2 class="text-lg font-semibold text-gray-800 mb-2">
+                    Заказ #<?php echo esc_html($order->get_order_number()); ?>
+                </h2>
 
-		<tbody>
-			<?php
-			foreach ( $customer_orders->orders as $customer_order ) {
-				$order      = wc_get_order( $customer_order ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
-				$item_count = $order->get_item_count() - $order->get_item_count_refunded();
-				?>
-				<tr class="woocommerce-orders-table__row woocommerce-orders-table__row--status-<?php echo esc_attr( $order->get_status() ); ?> order">
-					<?php foreach ( wc_get_account_orders_columns() as $column_id => $column_name ) :
-						$is_order_number = 'order-number' === $column_id;
-					?>
-						<?php if ( $is_order_number ) : ?>
-							<th class="woocommerce-orders-table__cell woocommerce-orders-table__cell-<?php echo esc_attr( $column_id ); ?>" data-title="<?php echo esc_attr( $column_name ); ?>" scope="row">
-						<?php else : ?>
-							<td class="woocommerce-orders-table__cell woocommerce-orders-table__cell-<?php echo esc_attr( $column_id ); ?>" data-title="<?php echo esc_attr( $column_name ); ?>">
-						<?php endif; ?>
+                <div class="space-y-2">
+                    <div class="flex justify-between">
+                        <span class="text-gray-600">Дата заказа:</span>
+                        <span class="font-medium"><?php echo esc_html(wc_format_datetime($order->get_date_created())); ?></span>
+                    </div>
 
-							<?php if ( has_action( 'woocommerce_my_account_my_orders_column_' . $column_id ) ) : ?>
-								<?php do_action( 'woocommerce_my_account_my_orders_column_' . $column_id, $order ); ?>
+                    <div class="flex justify-between">
+                        <span class="text-gray-600">Статус:</span>
+                        <span class="font-medium"><?php echo esc_html(wc_get_order_status_name($order->get_status())); ?></span>
+                    </div>
 
-							<?php elseif ( $is_order_number ) : ?>
-								<?php /* translators: %s: the order number, usually accompanied by a leading # */ ?>
-								<a href="<?php echo esc_url( $order->get_view_order_url() ); ?>" aria-label="<?php echo esc_attr( sprintf( __( 'View order number %s', 'woocommerce' ), $order->get_order_number() ) ); ?>">
-									<?php echo esc_html( _x( '#', 'hash before order number', 'woocommerce' ) . $order->get_order_number() ); ?>
-								</a>
+                    <div class="flex justify-between">
+                        <span class="text-gray-600">Итоговая сумма:</span>
+                        <span class="font-medium">
+                    <?php echo wp_kses_post(sprintf(_n('%1$s за %2$s товар', '%1$s за %2$s товара', $item_count, 'woocommerce'), $order->get_formatted_order_total(), $item_count)); ?>
+                </span>
+                    </div>
 
-							<?php elseif ( 'order-date' === $column_id ) : ?>
-								<time datetime="<?php echo esc_attr( $order->get_date_created()->date( 'c' ) ); ?>"><?php echo esc_html( wc_format_datetime( $order->get_date_created() ) ); ?></time>
+                    <?php
+                    $actions = wc_get_account_orders_actions($order);
+                    if (!empty($actions)) : ?>
+                        <div class="mt-5">
+                            <?php foreach ($actions as $key => $action) :
+                                $action_aria_label = empty($action['aria-label'])
+                                    ? sprintf(__(' %1$s заказ №%2$s', 'woocommerce'), $action['name'], $order->get_order_number())
+                                    : $action['aria-label'];
+                                ?>
+                                <a href="<?php echo esc_url($action['url']); ?>"
+                                   class="woocommerce-button button btn <?php echo sanitize_html_class($key); ?>"
+                                   aria-label="<?php echo esc_attr($action_aria_label); ?>">
+                                    <?php echo esc_html($action['name']); ?>
+                                </a>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+    <?php endforeach; ?>
+    </div>
 
-							<?php elseif ( 'order-status' === $column_id ) : ?>
-								<?php echo esc_html( wc_get_order_status_name( $order->get_status() ) ); ?>
+    <?php do_action( 'woocommerce_before_account_orders_pagination' ); ?>
 
-							<?php elseif ( 'order-total' === $column_id ) : ?>
-								<?php
-								/* translators: 1: formatted order total 2: total order items */
-								echo wp_kses_post( sprintf( _n( '%1$s for %2$s item', '%1$s for %2$s items', $item_count, 'woocommerce' ), $order->get_formatted_order_total(), $item_count ) );
-								?>
+    <?php if ( 1 < $customer_orders->max_num_pages ) : ?>
+        <div class="woocommerce-pagination woocommerce-pagination--without-numbers woocommerce-Pagination">
+            <?php if ( 1 !== $current_page ) : ?>
+                <a class="woocommerce-button woocommerce-button--previous woocommerce-Button woocommerce-Button--previous button<?php echo esc_attr( $wp_button_class ); ?>" href="<?php echo esc_url( wc_get_endpoint_url( 'orders', $current_page - 1 ) ); ?>"><?php esc_html_e( 'Previous', 'woocommerce' ); ?></a>
+            <?php endif; ?>
 
-							<?php elseif ( 'order-actions' === $column_id ) : ?>
-								<?php
-								$actions = wc_get_account_orders_actions( $order );
-
-								if ( ! empty( $actions ) ) {
-									foreach ( $actions as $key => $action ) { // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
-										if ( empty( $action['aria-label'] ) ) {
-											// Generate the aria-label based on the action name.
-											/* translators: %1$s Action name, %2$s Order number. */
-											$action_aria_label = sprintf( __( '%1$s order number %2$s', 'woocommerce' ), $action['name'], $order->get_order_number() );
-										} else {
-											$action_aria_label = $action['aria-label'];
-										}
-										echo '<a href="' . esc_url( $action['url'] ) . '" class="cursor-pointer text-center px-6 py-2 border border-black bg-black text-white-10 block sm:inline-block  text-base font-medium font-sans lowercase transition ease-in-out duration-500 hover:bg-transparent hover:text-black" aria-label="' . esc_attr( $action_aria_label ) . '">' . esc_html( $action['name'] ) . '</a>';
-										unset( $action_aria_label );
-									}
-								}
-								?>
-							<?php endif; ?>
-
-						<?php if ( $is_order_number ) : ?>
-							</th>
-						<?php else : ?>
-							</td>
-						<?php endif; ?>
-					<?php endforeach; ?>
-				</tr>
-				<?php
-			}
-			?>
-		</tbody>
-	</table>
-
-	<?php do_action( 'woocommerce_before_account_orders_pagination' ); ?>
-
-	<?php if ( 1 < $customer_orders->max_num_pages ) : ?>
-		<div class="woocommerce-pagination woocommerce-pagination--without-numbers woocommerce-Pagination">
-			<?php if ( 1 !== $current_page ) : ?>
-				<a class="woocommerce-button woocommerce-button--previous woocommerce-Button woocommerce-Button--previous button<?php echo esc_attr( $wp_button_class ); ?>" href="<?php echo esc_url( wc_get_endpoint_url( 'orders', $current_page - 1 ) ); ?>"><?php esc_html_e( 'Previous', 'woocommerce' ); ?></a>
-			<?php endif; ?>
-
-			<?php if ( intval( $customer_orders->max_num_pages ) !== $current_page ) : ?>
-				<a class="woocommerce-button woocommerce-button--next woocommerce-Button woocommerce-Button--next button<?php echo esc_attr( $wp_button_class ); ?>" href="<?php echo esc_url( wc_get_endpoint_url( 'orders', $current_page + 1 ) ); ?>"><?php esc_html_e( 'Next', 'woocommerce' ); ?></a>
-			<?php endif; ?>
-		</div>
-	<?php endif; ?>
+            <?php if ( intval( $customer_orders->max_num_pages ) !== $current_page ) : ?>
+                <a class="woocommerce-button woocommerce-button--next woocommerce-Button woocommerce-Button--next button<?php echo esc_attr( $wp_button_class ); ?>" href="<?php echo esc_url( wc_get_endpoint_url( 'orders', $current_page + 1 ) ); ?>"><?php esc_html_e( 'Next', 'woocommerce' ); ?></a>
+            <?php endif; ?>
+        </div>
+    <?php endif; ?>
 
 <?php else : ?>
 

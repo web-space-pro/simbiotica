@@ -35,8 +35,19 @@ module.exports = {
       'woocommerce/single-product/add-to-cart/simple.php',
       'woocommerce/cart/cart.php',
       'woocommerce/cart/cart-totals.php',
+
       'woocommerce/checkout/form-checkout.php',
+      'woocommerce/checkout/form-billing.php',
       'woocommerce/checkout/payment.php',
+      'woocommerce/checkout/thankyou.php',
+
+      'woocommerce/order/order-details.php',
+      'woocommerce/order/order-details-item.php',
+      'woocommerce/order/order-details-customer.php',
+
+      'woocommerce/myaccount/dashboard.php',
+      'woocommerce/myaccount/form-edit-account.php',
+      'woocommerce/myaccount/form-login.php',
 
 
 

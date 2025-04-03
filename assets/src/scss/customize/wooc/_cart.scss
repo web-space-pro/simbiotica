@@ -1,0 +1,68 @@
+.woocommerce-cart{
+  table{
+    thead{
+      @apply hidden;
+    }
+  }
+  .quantity .qty {
+    width: auto;
+    max-width: 45px;
+    text-align: center;
+    border: 0;
+    pointer-events: none;
+    @apply text-base xl:text-xl;
+  }
+  .qty-minus,
+  .qty-plus {
+    @apply xl:w-10 xl:h-10;
+  }
+  .cart-collaterals .cart_totals{
+    @apply float-none w-full xs:w-5/6 lg:w-1/2;
+    margin: 0 0 0 auto;
+  }
+}
+.woocommerce-cart-form.processing,
+.cart_totals.processing{
+  opacity: 1 !important;
+}
+.woocommerce-cart-form .blockUI,
+.woocommerce-cart-form .blockOverlay,
+.cart_totals .blockUI,
+.cart_totals .blockOverlay{
+  display: none !important;
+}
+
+.wc-empty-cart-message{
+  @apply mt-20 flex-col gap-0 justify-center items-center h-full;
+  &::before{
+    background-color: currentColor;
+    content: "";
+    display: block;
+    height: 5em;
+    margin: 0 auto 1em;
+    mask-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzOCIgaGVpZ2h0PSIzOCIgZmlsbD0ibm9uZSI+PHBhdGggZmlsbD0iY3VycmVudENvbG9yIiBkPSJNMTkgMEM4LjUwNCAwIDAgOC41MDQgMCAxOXM4LjUwNCAxOSAxOSAxOSAxOS04LjUwNCAxOS0xOVMyOS40OTYgMCAxOSAwWm02LjEyOSAxMi44NzFhMi40NDkgMi40NDkgMCAwIDEgMi40NTIgMi40NTIgMi40NDkgMi40NDkgMCAwIDEtMi40NTIgMi40NTEgMi40NDkgMi40NDkgMCAwIDEtMi40NTItMi40NTEgMi40NDkgMi40NDkgMCAwIDEgMi40NTItMi40NTJaTTExLjY0NSAzMS4yNThjLTIuMDMgMC0zLjY3Ny0xLjYwOS0zLjY3Ny0zLjYgMC0xLjUzMyAyLjE4My00LjYyOCAzLjE4Ny01Ljk2MWEuNjEuNjEgMCAwIDEgLjk4IDBjMS4wMDQgMS4zMzMgMy4xODggNC40MjggMy4xODggNS45NiAwIDEuOTkyLTEuNjQ4IDMuNjAxLTMuNjc4IDMuNjAxWm0xLjIyNi0xMy40ODRhMi40NDkgMi40NDkgMCAwIDEtMi40NTItMi40NTEgMi40NDkgMi40NDkgMCAwIDEgMi40NTItMi40NTIgMi40NDkgMi40NDkgMCAwIDEgMi40NTIgMi40NTIgMi40NDkgMi40NDkgMCAwIDEtMi40NTIgMi40NTFabTEzLjA0IDExLjgxNEE4Ljk4OSA4Ljk4OSAwIDAgMCAxOSAyNi4zNTVjLTEuNjI0IDAtMS42MjQtMi40NTIgMC0yLjQ1MmExMS40IDExLjQgMCAwIDEgOC43ODggNC4xMjJjMS4wNTcgMS4yNTctLjg1OSAyLjc5Ni0xLjg3OCAxLjU2M1oiLz48L3N2Zz4=);
+    mask-position: center;
+    mask-repeat: no-repeat;
+    mask-size: 5em;
+    width: 5em;
+  }
+  .woocommerce-info{
+    border: none;
+    background: transparent;
+    color: #3f4042;
+    padding-left: 0;
+    padding-right: 0;
+    text-align: center;
+    justify-content: center;
+    margin-bottom: 0;
+    &:before{
+      content: none;
+    }
+  }
+  .wc-empty-cart-message, .return-to-shop{
+    @apply block;
+  }
+  .woocommerce{
+    @apply w-full;
+  }
+}

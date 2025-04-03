@@ -12,7 +12,7 @@ function simbiotica_theme_setup() {
         * If you're building a theme based on custom-theme, use a find and replace
         * to change 'custom-theme' to the name of your theme in all the template files.
         */
-    load_theme_textdomain( 'advocate-theme', get_template_directory() . '/languages' );
+    load_theme_textdomain( 'simbiotica-theme', get_template_directory() . '/languages' );
 
     // Add default posts and comments RSS feed links to head.
     add_theme_support( 'automatic-feed-links' );
@@ -20,9 +20,6 @@ function simbiotica_theme_setup() {
 
     //Add Thumbnail Theme support
     add_theme_support( 'post-thumbnails' );
-
-    // Add support for block styles.
-   // add_theme_support( 'wp-block-styles' );
 
     /*
         * Switch default core markup for search form, comment form, and comments
@@ -92,17 +89,17 @@ remove_action('admin_print_styles', 'print_emoji_styles');
 // ------- для Gutenberg -----------------
 
 //Включает поддержку редактора стилей Gutenberg
-function blaar_gutenberg_setup() {
+function simbiotica_gutenberg_setup() {
     add_theme_support('wp-block-styles'); // Подключает базовые стили блоков
     add_theme_support('align-wide'); // Поддержка широких и полноразмерных блоков
     add_theme_support('editor-styles'); // Включает стили редактора
 }
-add_action('after_setup_theme', 'blaar_gutenberg_setup');
+add_action('after_setup_theme', 'simbiotica_gutenberg_setup');
 
-function blaar_gutenberg_enqueue_styles() {
+function simbiotica_gutenberg_enqueue_styles() {
     wp_enqueue_style('theme-style', get_stylesheet_uri()); // Стиль темы
     wp_enqueue_style('wp-block-library'); // Базовые стили Gutenberg
 }
-add_action('wp_enqueue_scripts', 'blaar_gutenberg_enqueue_styles');
+add_action('wp_enqueue_scripts', 'simbiotica_gutenberg_enqueue_styles');
 // ------- для Gutenberg --------конец---------
 ?>

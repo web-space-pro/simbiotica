@@ -19,67 +19,46 @@ defined( 'ABSPATH' ) || exit;
 
 $customer_id = get_current_user_id();
 
-$get_addresses = apply_filters(
-    'woocommerce_my_account_get_addresses',
-    array(
-        'shipping' => __( 'Shipping address', 'woocommerce' ),
-    ),
-    $customer_id
-);
+if ( ! wc_ship_to_billing_address_only() && wc_shipping_enabled() ) {
+	$get_addresses = apply_filters(
+		'woocommerce_my_account_get_addresses',
+		array(
+			'billing'  => __( 'Billing address', 'woocommerce' ),
+			'shipping' => __( 'Shipping address', 'woocommerce' ),
+		),
+		$customer_id
+	);
+} else {
+	$get_addresses = apply_filters(
+		'woocommerce_my_account_get_addresses',
+		array(
+			'billing' => __( 'Billing address', 'woocommerce' ),
+		),
+		$customer_id
+	);
+}
 
 $oldcol = 1;
 $col    = 1;
 ?>
+   <?php // Получаем данные пользователя для отображения
+    $user_id = get_current_user_id();
+    $user = get_user_by('id', $user_id);
 
-<p>
-	<?php echo apply_filters( 'woocommerce_my_account_my_address_description', esc_html__( 'The following addresses will be used on the checkout page by default.', 'woocommerce' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-</p>
+    // Получаем данные из профиля пользователя или из заказа
+    $first_name = get_user_meta($customer_id, 'billing_first_name', true);
+    $phone = get_user_meta($customer_id, 'billing_phone', true);
+    $email = get_user_meta($customer_id, 'billing_email', true);
+    ?>
 
-<?php if ( ! wc_ship_to_billing_address_only() && wc_shipping_enabled() ) : ?>
-	<div class="u-columns woocommerce-Addresses col2-set addresses">
-<?php endif; ?>
+    <p>Эти данные будут использованы по умолчанию при оформлении заказов</p>
 
-<?php foreach ( $get_addresses as $name => $address_title ) : ?>
-	<?php
-		$address = wc_get_account_formatted_address( $name );
-		$col     = $col * -1;
-		$oldcol  = $oldcol * -1;
-	?>
+    <div class="user-address-info mb-10 mt-4">
+        <p><strong>ФИО:</strong> <?php echo esc_html($first_name); ?></p>
+        <p><strong>Телефон:</strong> <?php echo esc_html($phone); ?></p>
+        <p><strong>Email:</strong> <?php echo esc_html($email); ?></p>
+    </div>
 
-	<div class="woocommerce-Address">
-		<header class="mt-6 mb-2 woocommerce-Address-title title">
-			<h2 class="text-xs md:text-base lg:text-xl xl:text-2xl leading-tight font-sans font-medium text-black"><?php echo esc_html( $address_title ); ?></h2>
-		</header>
-        <a href="<?php echo esc_url( wc_get_endpoint_url( 'edit-address', $name ) ); ?>" target="_self" class="inline-block w-full text-center relative font-medium transition-all before:content-[''] before:duration-300 before:ease-out before:top-0 before:left-0 before:bottom-0 before:w-0 before:absolute before:h-full hover:before:w-full hover:before:bg-black">
-                <span class="px-6 py-2 border border-black inline-block w-full hover:text-white-10 relative top-0 left-0 transition-all">
-                    <?php
-                    printf(
-                    /* translators: %s: Address title */
-                        $address ? esc_html__( 'Edit %s', 'woocommerce' ) : esc_html__( 'Add %s', 'woocommerce' ),
-                        esc_html( $address_title )
-                    );
-                    ?>
-                </span>
-        </a>
-
-		<address class="mt-6">
-			<?php
-				echo $address ? wp_kses_post( $address ) : esc_html_e( 'You have not set up this type of address yet.', 'woocommerce' );
-
-				/**
-				 * Used to output content after core address fields.
-				 *
-				 * @param string $name Address type.
-				 * @since 8.7.0
-				 */
-				do_action( 'woocommerce_my_account_after_my_address', $name );
-			?>
-		</address>
-	</div>
-
-<?php endforeach; ?>
-
-<?php if ( ! wc_ship_to_billing_address_only() && wc_shipping_enabled() ) : ?>
-	</div>
-	<?php
-endif;
+    <a href="<?php echo esc_url( wc_get_endpoint_url( 'edit-address', 'billing' ) ); ?>" class="edit btn">
+        Изменить данные
+    </a>
